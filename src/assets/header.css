@@ -1,7 +1,7 @@
 img
 {
     background-color: #FD2D01;
-    width: 50%;
+    width: 200px;
     
     object-fit: cover;
 }
@@ -13,4 +13,14 @@ div.contain
     justify-content: center;
     background-color: #FD2D01;
     margin-bottom: 100px;
+}
+
+@media only screen and (max-witdh: 767px) 
+{
+    img 
+    {
+        width: 50%;
+        background-color: cornflowerblue;
+        border: 10px solid black;
+    }
 }

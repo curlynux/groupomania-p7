@@ -1,0 +1,27 @@
+@media only screen and (max-witdh: 767px) 
+{
+
+        img
+    {
+        background-color: #FD2D01;
+        width: 25%;
+        background-color: cornflowerblue;
+        border: 10px solid black;
+        
+        object-fit: cover;
+    }
+
+    div.contain 
+    {
+        display: flex;
+        height: 100px;
+        justify-content: center;
+        background-color: #FD2D01;
+        margin-bottom: 100px;
+    }
+
+    img 
+    {
+        width: 50%;
+    }
+}
