@@ -6,6 +6,7 @@ function Login()
     return(
         <div>
             <Header/>
+            <h1>Connexion</h1>
             <div className="flex justify-center">
                 <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <div className="mb-4">
@@ -25,7 +26,7 @@ function Login()
                         <button className="hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                             connexion
                         </button>
-                        <Link className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" to="/">
+                        <Link className="inline-block align-baseline ml-2 font-bold text-sm text-blue-500 hover:text-blue-800" to="/">
                             pas de compte ? inscrivez vous.
                         </Link>
                     </div>

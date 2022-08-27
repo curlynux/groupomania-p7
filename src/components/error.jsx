@@ -3,7 +3,7 @@
 const Error = () => 
 {
     return(
-        <p>page introuvable</p>
+        <h1>page introuvable</h1>
     )
 }
 

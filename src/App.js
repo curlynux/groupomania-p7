@@ -1,12 +1,12 @@
 import "normalize.css"
 import Header from "./components/header";
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div>
       <Header/>
+      <h1 className="">Inscription</h1>
         <div className="flex justify-center">
             <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
@@ -26,7 +26,7 @@ function App() {
                     <button className="hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                         connexion
                     </button>
-                    <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/login">
+                    <a className="inline-block align-baseline ml-2 font-bold text-sm text-blue-500 hover:text-blue-800" href="/login">
                         deja un compte ? connecter vous.
                     </a>
                 </div>
