@@ -1,0 +1,35 @@
+div.box
+{
+    display: flex;
+}
+
+.text
+{
+    border: 2px solid #cbd5e1
+}
+
+form
+{
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    margin: 0 auto;
+}
+
+
+
+button
+{
+}
+
+div.boxbtn
+{
+    display: flex;
+    justify-content: space-around;
+}
+
+/* button.image
+{
+    align-self: flex-end;
+    flex-basis: 30%;
+} */
