@@ -1,7 +1,13 @@
-div.box
-{
-    display: flex;
+@font-face {
+    font-family: "Lato";
+    src: url("./font//Lato/Lato-Regular.ttf");
 }
+
+html *
+{
+    font-family: "Lato";
+}
+
 
 .text
 {
@@ -16,10 +22,9 @@ form
     margin: 0 auto;
 }
 
-
-
-button
+textarea#editor
 {
+    font-size: 2em;
 }
 
 div.boxbtn
@@ -28,8 +33,36 @@ div.boxbtn
     justify-content: space-around;
 }
 
-/* button.image
+strong
 {
-    align-self: flex-end;
-    flex-basis: 30%;
-} */
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+.notification
+{
+    height: 50px;
+    display: flex;
+}
+
+.msg
+{
+    font-size: 0.9em;
+}
+
+.notif
+{
+    opacity: 1;
+    animation: fadein 3s;
+}
+
+@keyframes fadein 
+{
+    from {
+        opacity: 0;
+        transition:ease;
+    }
+    to{
+        opacity: 1;
+    }
+}
