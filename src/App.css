@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Lato";
+  src: url("./assets/font/Lato/Lato-Regular.ttf");
+}
+
+html *
+{
+  font-family: "Lato";
+}
+
 .App {
   text-align: center;
 }

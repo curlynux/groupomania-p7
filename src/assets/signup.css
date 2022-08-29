@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Lato";
+    src: url("./font//Lato/Lato-Regular.ttf");
+}
+
+html *
+{
+    font-family: "Lato";
+}
+
 div.items-center button
 {
     background-color: #FD2D01;
@@ -6,9 +16,4 @@ div.items-center button
 h1  {
     display: flex;
     justify-content: center;
-}
-
-a 
-{
-    
 }

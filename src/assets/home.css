@@ -8,7 +8,6 @@ html *
     font-family: "Lato";
 }
 
-
 .text
 {
     border: 2px solid #cbd5e1
@@ -31,6 +30,18 @@ div.boxbtn
 {
     display: flex;
     justify-content: space-around;
+}
+
+button.publish
+{
+    background-color: #FD2D01;
+}
+
+button.image
+{
+    border: 2px solid #FD2D01;
+    border-radius: 0.25rem;
+    color: #4E5166;
 }
 
 strong
@@ -56,13 +67,32 @@ strong
     animation: fadein 3s;
 }
 
-@keyframes fadein 
+div#feed
 {
-    from {
-        opacity: 0;
-        transition:ease;
-    }
-    to{
-        opacity: 1;
-    }
+    display: flex;
+    flex-direction: column;
+}
+
+div.post
+{
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    width: max-content;
+    border: 3px solid #FFD7D7;
+    border-radius: 30px;
+    margin-bottom: 100px;
+    width: 350px;
+    padding: 20px;
+}
+
+div.post span, h1
+{
+    color: #4E5166;
+}
+
+div.post img
+{
+    display: flex;
+    margin: 5%;
 }

@@ -1,6 +1,12 @@
-body {
-    font-family: 'Roboto', sans-serif;
-  }
+@font-face {
+  font-family: "Lato";
+  src: url("./font//Lato/Lato-Regular.ttf");
+}
+
+html *
+{
+  font-family: "Lato";
+}
   .container {
     width: 100vw;
     height: 100vh;
