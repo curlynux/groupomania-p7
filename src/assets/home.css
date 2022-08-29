@@ -97,7 +97,20 @@ div.post img
     margin: 5%;
 }
 
-div.vote strong
+div.vote
+{
+    display: flex;
+    justify-content: space-around;
+}
+
+div.vote button
 {
     font-size: 1.5em;
+    background-color: #FFD7D7;
+    padding: 5px;
+    border-radius: 10px;
+    border: 2px solid #4E5166;
+    display: flex;
+
+
 }

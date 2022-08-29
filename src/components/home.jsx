@@ -41,8 +41,8 @@ function Home()
         const image = document.createElement("img");
         var arr = [];
         const divLike = document.createElement("div");
-        const like = document.createElement("strong");
-        const disLike = document.createElement("strong");
+        const like = document.createElement("button");
+        const disLike = document.createElement("button");
         
 
         like.innerHTML = "like";
