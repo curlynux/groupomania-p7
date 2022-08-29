@@ -1,10 +1,6 @@
 import "../assets/home.css"
 import Header from "./header"
 
-
-
-
-
 function Home() 
 {
     function notification() 
@@ -16,20 +12,14 @@ function Home()
         const icon = document.createElement("span");
         const svg = document.createElement("svg");
         const path = document.createElement("path");
-
+        
         bg.setAttribute("class", "bg-green-100 border border-green-400 text-green-700 px-4 py-4 notification rounded relative");
         strong.setAttribute("class", "font-bold");
         message.setAttribute("class", "block sm:inline msg");
         icon.setAttribute("class", "absolute top-0 bottom-0 right-0 px-4 py-3");
-        svg.setAttribute("class", "fill-current h-6 w-6 text-green-500");
 
         bg.setAttribute("role", "alert");
-        svg.setAttribute("role", "button");
-        svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        svg.setAttribute("viewBox", "0 0 20 20");
-
-        path.setAttribute("d", "M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z");
-
+      
         strong.innerHTML = "NEW POST !";
         message.innerHTML = "vous avez publié un nouveau post";
         
@@ -43,24 +33,26 @@ function Home()
         setTimeout(() => bg.remove(), 5000)
     }
 
-    function handleClick(e) {
-        e.preventDefault();
-        console.log(e);
-        console.log('Le lien a été cliqué.');
-      }
     function createPost() 
     {
         const feed = document.getElementById("feed");
         const post = document.createElement("div");
         const login = document.createElement("span");
         const image = document.createElement("img");
-        const text = document.getElementById("#editor")
-
         var arr = [];
+        const divLike = document.createElement("div");
+        const like = document.createElement("strong");
+        const disLike = document.createElement("strong");
+        
 
+        like.innerHTML = "like";
+        disLike.innerHTML = "dislike";
+        divLike.appendChild(like);
+        divLike.appendChild(disLike);
+        divLike.className = "vote";
         post.setAttribute("class", "post");
         login.setAttribute("class", "login");
-
+    
         while(arr.length < 1)
         {
             var r = Math.floor(Math.random() * 1000) + 1;
@@ -68,17 +60,17 @@ function Home()
             console.log(arr[0]);
             image.src = `https://picsum.photos/id/${arr[0]}/200/300`
         }
-
         
-
         login.innerHTML = "curlynux";
         feed.appendChild(post);
         post.appendChild(login);
         post.appendChild(image);
-        
-        notification()
+        image.alt = "img_post"
+        console.log(post);
+        post.append(divLike)
+
+        notification();
     }
-    
     return(
         <div id="main">
             <Header/>
@@ -95,7 +87,7 @@ function Home()
                     </div>
                     <div className="notif"></div>
                     <div className="boxbtn">
-                        <button type="submit" onSubmit={handleClick} onClick={() => createPost()} className="items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800">
+                        <button type="submit" onClick={() => createPost()} className="items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800">
                             publish post
                         </button>
                         <button className="bg-transparent image font-semibold py-2 px-4">

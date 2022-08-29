@@ -96,3 +96,8 @@ div.post img
     display: flex;
     margin: 5%;
 }
+
+div.vote strong
+{
+    font-size: 1.5em;
+}
