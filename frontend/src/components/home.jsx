@@ -45,8 +45,8 @@ function Home()
         const disLike = document.createElement("button");
         
 
-        like.innerHTML = "like";
-        disLike.innerHTML = "dislike";
+        like.innerHTML = "👍";
+        disLike.innerHTML = "👎";
         divLike.appendChild(like);
         divLike.appendChild(disLike);
         divLike.className = "vote";
