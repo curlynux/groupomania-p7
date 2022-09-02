@@ -12,7 +12,8 @@ const User = new Schema({
     },
     password: {
         type: String
-    }
+    },
+    role: {type: String, default: "user"}
 });
 
 User.plugin(uniqueValidator);

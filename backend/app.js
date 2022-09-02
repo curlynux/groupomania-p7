@@ -4,9 +4,15 @@ const userRoutes = require("./api/routes/userRoute");
 const mongoose = require("mongoose")
 const app = express();
 const path = require("path");
-const testcode = require("./api/controllers/testcode")
+const testcode = require("./api/controllers/testcode");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
 require("dotenv").config()
-app.use(cors())
+
+app.use(cors());
+app.use(morgan("dev"))
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
 app.use("/api/auth", userRoutes);
 
@@ -28,6 +34,5 @@ mongoose.connect(`mongodb+srv://${process.env.MONGOLOGIN}:${process.env.MONGOPSW
 .then(() => console.log("connexion a mongodb reussi !"))
 .catch(() => console.log("connexion a mongo echoué !"));
 
-app.use(express.json());
-app.use("/images", express.static("images"))
+// app.use("/images", express.static("images"))
 module.exports = app;

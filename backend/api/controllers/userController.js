@@ -5,21 +5,26 @@ const bcrypt = require("bcrypt");
 const User = require("../../api/models/userModel.js")
 const jwt = require("jsonwebtoken");
 
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+console.log("test");
 
 exports.signup = (req, res, next) =>
 {
-    console.log(req.body.email);
+    console.log("test");
+    console.log(req.body);
     bcrypt.hash(req.body.password, 10)
     .then(hash => 
     {
+        console.log("test");
         const user = new User({email: req.body.email, password: hash});
-        console.log(hash);
+        console.log(`HASH: %s`, hash);
         user.save()
         .then(() => res.status(201).json({message: "utilisateur créé !"}))
         .catch((error) => 
         {
+            console.log(req.body);
+
             console.error(`c'est une bad request 1 ! ${error}`)
             res.status(400).json({error})
         });
@@ -29,14 +34,13 @@ exports.signup = (req, res, next) =>
         console.log(error);
         res.status(500).json({error})
     });
+    next()
 }
 
-exports.testcode = (req, res) =>
+exports.testcode = ((req, res) => 
 {
-    res.send("curlynux") // change the path to your index.html
-    fetch("https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50")
-    .then(data => console.log(data.url))
-}
+    res.send("curlynux")
+});
 
 exports.login = (req, res, next) =>
 {
