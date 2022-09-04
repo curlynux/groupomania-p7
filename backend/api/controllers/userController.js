@@ -9,38 +9,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 console.log("test");
 
-exports.signup = (req, res, next) =>
+exports.signup = async (req, res, next) =>
 {
-    console.log("test");
-    console.log(req.body);
-    bcrypt.hash(req.body.password, 10)
-    .then(hash => 
-    {
-        console.log("test");
-        const user = new User({email: req.body.email, password: hash});
-        console.log(`HASH: %s`, hash);
-        user.save()
-        .then(() => res.status(201).json({message: "utilisateur créé !"}))
-        .catch((error) => 
-        {
-            console.log(req.body);
-
-            console.error(`c'est une bad request 1 ! ${error}`)
-            res.status(400).json({error})
-        });
-    })
-    .catch((error) => 
-    {
-        console.log(error);
-        res.status(500).json({error})
+    try {
+        const hashedPass = await bcrypt.hash(req.body.password, 10);
+        const newUser = new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPass,
     });
-    next()
+    
+       const user = await newUser.save();
+       console.log(user)
+       console.log("user created !");
+        return res.status(201).json({message: "user creates sucessfully !"});
+       } catch (err) {
+      res.status(500).json(err);
+     }
 }
-
-exports.testcode = ((req, res) => 
-{
-    res.send("curlynux")
-});
 
 exports.login = (req, res, next) =>
 {

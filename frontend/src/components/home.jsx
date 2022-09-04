@@ -1,6 +1,5 @@
 import "../assets/home.css"
 import Header from "./header"
-import Users from "./user"
 
 function Home() 
 {

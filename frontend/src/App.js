@@ -1,67 +1,66 @@
 import "normalize.css"
 import Header from "./components/header";
 import "./App.css";
-import axios from "axios"
+// import axios from "axios"
 
 function App() {
     async function createUser()
     {
         const user = document.getElementById("user").value;
         const password = document.getElementById("pswd").value;
-        const formBody = new FormData();
-        formBody.append("email", user)
-        formBody.append("password", password)
+        // const formBody = new FormData();
+        // formBody.append("email", user)
+        // formBody.append("password", password)
 
-        // const fromData = {
-        //     email: user,
-        //     password: password
-        // }
-        // try {
-        //     let result = await fetch("http://localhost:8080/api/auth", 
-        //     {
-        //         method: "POST",
-        //         mode: "cors",
-        //         headers: {
-        //             "accept": "application/json",
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: JSON.stringify(fromData)
-        //     })
-        //     console.log(result);
-        // }
-        // catch (error)
-        //     {console.log(error)}
-        
-        
-
-        var data = {
+        const fromData = {
             email: user,
             password: password
         }
+        try {
+            let result = await fetch("http://localhost:8080/api/auth", 
+            {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(fromData)
+            })
+        }
+        catch (error)
+            {console.log(error)}
+        
+        
+
+        // var data = {
+            // email: user,
+            // password: password
+        // }
         // await axios.post("http://localhost:8080/api/auth",
         // data).then(response => console.log(response))
         // .catch(error => console.log(error))
 
-       await axios({
-            method: "POST",
-            url: "http://localhost:8080/api/auth",
-            data: data,
-            headers: {
-                "accept": "application/json",
-                "Content-Type": "application/json",
+    //    await axios({
+    //         method: "POST",
+    //         url: "http://localhost:8080/api/auth",
+    //         data: data,
+    //         headers: {
+    //             "accept": "application/json",
+    //             "Content-Type": "application/json",
                 
-            }
-        })
-        .then(response => 
-        {
-            console.log(response)
-            console.log(response.headers);
-        })
-        .catch(error => 
-            {
-                console.log(error);
-                document.getElementById("error").innerHTML = error
-            })
+    //         }
+    //     })
+    //     .then(response => 
+    //     {
+    //         console.log(response)
+    //         console.log(response.headers);
+    //     })
+    //     .catch(error => 
+    //         {
+    //             console.log(error);
+    //             document.getElementById("error").innerHTML = error
+    //         })
     }
 
   return (
