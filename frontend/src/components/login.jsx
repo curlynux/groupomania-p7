@@ -7,28 +7,37 @@ function Login()
 
     async function login() 
     {
-        const email = document.getElementById("email").value;
+        //  var token;
+        const user = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-
-        const formData = {
-            email: email,
+        
+        const fromData = {
+            email: user,
             password: password
         }
-
-        var headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Accept-Control-Origin": "*"
-        }
         try {
-            fetch("http://localhost:8080/login", {
+            let result = await fetch("http://localhost:8080/login", 
+            {
                 method: "POST",
-                headers: headers,
-                body: JSON.stringify(formData)
-            })
-            .then((response)=> {response.json()})
-        } catch(error)
-        {console.log(error)}
+                mode: "cors",
+                headers: {
+                    "accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(fromData)
+            }).then(async (response) => 
+                {
+                    return await response.json()
+                        .then(async (data) => 
+                        {
+                            await console.log(data)
+                            localStorage.setItem("token", JSON.stringify(data.token));
+                            localStorage.setItem("userId", JSON.stringify(data.userId));
+                        })
+                    })
+                }
+        catch (error)
+            {console.log(error)}
     }
 
     return(

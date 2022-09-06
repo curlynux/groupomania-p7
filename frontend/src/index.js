@@ -7,6 +7,8 @@ import reportWebVitals from './reportWebVitals';
 import Login from "./components/login";
 import Error from "./components/error";
 import Home from './components/home';
+import PrivateRoote from "./components/privateRoote";
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,10 +16,12 @@ root.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route exact path="/" element={<App/>} />
+        <Route element={<PrivateRoote/>}>
+          <Route exact path="/home" element={<Home/>}/>
+        </Route>
+        <Route  path="/" element={<App/>} />
         <Route path="/login" element={<Login/>}/>
         <Route path="*" element={<Error />} />
-        <Route path="/home" element={<Home/>}/>
       </Routes>
     </Router>
   </React.StrictMode>

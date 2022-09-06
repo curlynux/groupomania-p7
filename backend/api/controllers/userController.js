@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-console.log("test");
 
 exports.signup = async (req, res, next) =>
 {
@@ -30,9 +29,12 @@ exports.signup = async (req, res, next) =>
 
 exports.login = (req, res, next) =>
 {
+    console.log("test code");
     User.findOne({email: req.body.email})
     .then(user => 
     {
+    console.log("test code 2");
+
         if(!user === null)
             return res.status(401).json({message: "email/mdp incorrect"})
         else
@@ -44,10 +46,12 @@ exports.login = (req, res, next) =>
                     return res.status(401).json({message: "email/mdp incorrect"})
                 else
                 {
+                    console.log("test req test again");
                     res.status(200).json({
                         userId: user._id, token: jwt.sign({ userId: user._id },
                         "RANDOM_TOKEN_SECRET", {expiresIn: '24h'})
                     });   
+                
                 }
             })
             .catch((error) => 
