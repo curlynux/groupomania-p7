@@ -36,7 +36,7 @@ function Login()
                             console.log(data)
                             localStorage.setItem("token", JSON.stringify(data.token));
                             localStorage.setItem("userId", JSON.stringify(data.userId));
-                            navigate("/home")
+                            navigate("/home", {replace: true})
                         })
                     })
                 }
