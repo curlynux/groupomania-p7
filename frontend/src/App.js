@@ -1,9 +1,14 @@
 import "normalize.css"
 import Header from "./components/header";
 import "./App.css";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function App() {
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+    useEffect(() => {if(token) navigate("/home", 
+        {replace: true})}, [navigate, token])
     async function createUser()
     {
         const user = document.getElementById("user").value;
@@ -24,7 +29,7 @@ function App() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(fromData)
-            }).then(() => Navigate("/login", {replace: true}))
+            }).then(() => navigate("/login", {replace: true}))
         }
         catch (error)
             {console.log(error)}
