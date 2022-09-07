@@ -1,13 +1,16 @@
 import "normalize.css"
 import Header from "./components/header";
 import "./App.css";
+import { Navigate } from "react-router-dom";
 
 function App() {
     async function createUser()
     {
         const user = document.getElementById("user").value;
         const password = document.getElementById("pswd").value;
+        const username = document.getElementById("username").value;
         const fromData = {
+            username: username,
             email: user,
             password: password
         }
@@ -21,7 +24,7 @@ function App() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(fromData)
-            })
+            }).then(() => Navigate("/login", {replace: true}))
         }
         catch (error)
             {console.log(error)}
@@ -37,7 +40,11 @@ function App() {
                     <label className="block test-gray-700 text-sm font-bold mb-2" htmlFor="username">
                         Nom d'utilisateur
                     </label>
-                    <input id="user" name="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="login"/>
+                    <input id="username" name="username" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="login"/>
+                    <label className="block test-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                        Email
+                    </label>
+                    <input id="user" name="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="email"/>
                 </div>
                 <div className="mb-6">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
