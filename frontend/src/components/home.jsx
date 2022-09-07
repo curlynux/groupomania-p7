@@ -1,8 +1,18 @@
 import "../assets/home.css"
 import Header from "./header"
+import LogoutButton from "./logoutButton";
 
 function Home() 
 {
+    fetch("/home", 
+    {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+            "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`
+        },
+        mode: "no-cors"
+    });
     function notification() 
     {
         const div = document.getElementsByClassName("notif")[0];
@@ -71,10 +81,14 @@ function Home()
 
         notification();
     }
+
+    
+
     return(
         <div id="main">
             <Header/>
-            <h1>create post</h1>        
+            <h1>create post</h1>      
+            <LogoutButton />  
             <div className="flex">
                 <form>
                     <div className="mb-4 w-full parent bg-gray-50 rounded-lg border border-gray-200">

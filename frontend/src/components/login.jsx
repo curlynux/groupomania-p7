@@ -1,13 +1,16 @@
 import "../assets/signup.css";
 import { Link } from "react-router-dom";
 import Header from "./header";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function Login() 
 {
-
+    const navigate = useNavigate();
+    // let userId = JSON.parse(localStorage.getItem("userId"));
+    let token = JSON.parse(localStorage.getItem("token"));
     async function login() 
     {
-        //  var token;
         const user = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         
@@ -16,7 +19,7 @@ function Login()
             password: password
         }
         try {
-            let result = await fetch("http://localhost:8080/login", 
+                await fetch("http://localhost:8080/login", 
             {
                 method: "POST",
                 mode: "cors",
@@ -28,17 +31,21 @@ function Login()
             }).then(async (response) => 
                 {
                     return await response.json()
-                        .then(async (data) => 
+                        .then(data => 
                         {
-                            await console.log(data)
+                            console.log(data)
                             localStorage.setItem("token", JSON.stringify(data.token));
                             localStorage.setItem("userId", JSON.stringify(data.userId));
+                            navigate("/home")
                         })
                     })
                 }
         catch (error)
             {console.log(error)}
     }
+   
+    
+    // useEffect(() => {},[navigate, token])
 
     return(
         <div>
