@@ -1,18 +1,26 @@
 import "../assets/home.css"
 import Header from "./header"
 import LogoutButton from "./logoutButton";
+import axios from "axios";
 
 function Home() 
 {
-    fetch("/home", 
+    var headers = new Headers();
+    headers.set("Authorization", `Bearer ${JSON.parse(localStorage.getItem("token"))}`)
+    headers.set("X-Authenticated-Userid", `${JSON.parse(localStorage.getItem("userId"))}`)
+    console.log(headers.get("Authorization"));
+    console.log(headers.get("X-Authenticated-Userid"));
+    try 
     {
-        method: "GET",
-        headers: {
-            "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-            "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`
-        },
-        mode: "no-cors"
-    });
+        fetch("/home", 
+        {
+            method: "GET",
+            headers: headers,
+            mode: "cors"
+        });
+    }
+    catch (error)
+    {console.log(error)}
     function notification() 
     {
         const div = document.getElementsByClassName("notif")[0];

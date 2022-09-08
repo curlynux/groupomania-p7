@@ -9,6 +9,7 @@ function App() {
     const token = localStorage.getItem("token");
     useEffect(() => {if(token) navigate("/home", 
         {replace: true})}, [navigate, token])
+        
     async function createUser()
     {
         const user = document.getElementById("user").value;
