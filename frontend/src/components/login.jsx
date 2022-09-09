@@ -2,13 +2,10 @@ import "../assets/signup.css";
 import { Link } from "react-router-dom";
 import Header from "./header";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 function Login() 
 {
     const navigate = useNavigate();
-    // let userId = JSON.parse(localStorage.getItem("userId"));
-    let token = JSON.parse(localStorage.getItem("token"));
     async function login() 
     {
         const user = document.getElementById("email").value;
@@ -19,7 +16,7 @@ function Login()
             password: password
         }
         try {
-                await fetch("http://localhost:8080/login", 
+                await fetch("http://curlynux1.freeboxos.fr:49154/login", 
             {
                 method: "POST",
                 mode: "cors",

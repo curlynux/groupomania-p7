@@ -94,7 +94,7 @@ function Home()
             <Header/>
             <h1>create post</h1>      
             <LogoutButton />  
-            <AddImage/>
+            
             <div className="flex">
                 <form>
                     <div className="mb-4 w-full parent bg-gray-50 rounded-lg border border-gray-200">
@@ -114,6 +114,8 @@ function Home()
                             Add image
                         </button>
                     </div>
+                    <AddImage/>
+
                     <div id="feed">
                         <h1>Feed</h1>
                     </div>

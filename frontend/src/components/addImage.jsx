@@ -7,15 +7,14 @@ function AddImage()
     
     return(
         <div>
-            <h1>upload image and display it</h1>
             {selectedImage && (
             <div>
-                <img alt="image" src={URL.createObjectURL(selectedImage)} />
+                <img alt="image" id="preview" src={URL.createObjectURL(selectedImage)} />
                 <br />
-                <button onClick={() => setSelectedImage(null)} >Remove</button>
+                <button id="removePhoto" onClick={() => setSelectedImage(null)} >Remove</button>
             </div>)}
             <br/>
-            <input type="file" name="UploadImage" onChange={event => 
+            <input type="file" id="sendImage" name="UploadImage" onChange={event => 
                 {
                     console.log(event.target.files[0])
                     setSelectedImage(event.target.files[0])

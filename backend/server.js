@@ -12,7 +12,7 @@ const normalizePort = val =>
     return false;
 }
 
-const port = normalizePort(process.env.PORT || 8080);
+const port = normalizePort(process.env.PORT || 49154);
 app.set("port", port);
 
 const errorHandler = error => 
@@ -37,6 +37,13 @@ const errorHandler = error =>
 }
 const server = http.createServer(app);
 
+const { networkInterfaces } = require('os');
+
+const nets = networkInterfaces();
+const results = Object.create(null); // Or just '{}', an empty object
+
+
+
 server.on("error", errorHandler);
 server.on("listening", () => 
 {
@@ -44,5 +51,21 @@ server.on("listening", () =>
     const bind = typeof addr === "string" ? "pipe" + addr: "port" + port;
 
 });
-server.listen(port, "0.0.0.0");
-console.log(`server is ready ! on port ${port}`);
+
+for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+        // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+        // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
+        const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
+        if (net.family === familyV4Value && !net.internal) {
+            if (!results[name]) {
+                results[name] = [];
+            }
+            results[name].push(net.address);
+            console.log(net.address);
+            server.listen(port, "0.0.0.0");
+            console.log(`server is ready ! ${net.address} on port ${port}`);
+            console.log(`server is ready ! 127.0.0.1 on port ${port}`);
+        }
+    }
+}

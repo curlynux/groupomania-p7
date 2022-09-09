@@ -111,6 +111,18 @@ div.vote button
     border-radius: 10px;
     border: 2px solid #4E5166;
     display: flex;
+}
 
+#removePhoto
+{
+    background-color: #FFD7D7;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
 
+#preview 
+{
+    position: absolute;
+    right: 60px;
 }
