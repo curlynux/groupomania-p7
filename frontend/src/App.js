@@ -9,7 +9,7 @@ function App() {
     const token = localStorage.getItem("token");
     useEffect(() => {if(token) navigate("/home", 
         {replace: true})}, [navigate, token])
-        
+
     async function createUser()
     {
         const user = document.getElementById("user").value;
@@ -21,7 +21,7 @@ function App() {
             password: password
         }
         try {
-            let result = await fetch("http://localhost:8080/api/auth", 
+            await fetch("http://localhost:8080/api/auth", 
             {
                 method: "POST",
                 mode: "cors",

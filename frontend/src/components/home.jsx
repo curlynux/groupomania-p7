@@ -1,15 +1,13 @@
 import "../assets/home.css"
 import Header from "./header"
 import LogoutButton from "./logoutButton";
-import axios from "axios";
+import AddImage from "./addImage";
 
 function Home() 
 {
     var headers = new Headers();
     headers.set("Authorization", `Bearer ${JSON.parse(localStorage.getItem("token"))}`)
     headers.set("X-Authenticated-Userid", `${JSON.parse(localStorage.getItem("userId"))}`)
-    console.log(headers.get("Authorization"));
-    console.log(headers.get("X-Authenticated-Userid"));
     try 
     {
         fetch("/home", 
@@ -21,6 +19,7 @@ function Home()
     }
     catch (error)
     {console.log(error)}
+
     function notification() 
     {
         const div = document.getElementsByClassName("notif")[0];
@@ -28,13 +27,11 @@ function Home()
         const strong = document.createElement("strong");
         const message = document.createElement("span");
         const icon = document.createElement("span");
-        const svg = document.createElement("svg");
-        const path = document.createElement("path");
+
         
         bg.setAttribute("class", "bg-green-100 border border-green-400 text-green-700 px-4 py-4 notification rounded relative");
         strong.setAttribute("class", "font-bold");
         message.setAttribute("class", "block sm:inline msg");
-        icon.setAttribute("class", "absolute top-0 bottom-0 right-0 px-4 py-3");
 
         bg.setAttribute("role", "alert");
       
@@ -45,14 +42,14 @@ function Home()
         bg.appendChild(strong);
         bg.appendChild(message);
         bg.appendChild(icon);
-        icon.appendChild(svg);
-        svg.appendChild(path);
+
 
         setTimeout(() => bg.remove(), 5000)
     }
 
     function createPost() 
     {
+
         const feed = document.getElementById("feed");
         const post = document.createElement("div");
         const login = document.createElement("span");
@@ -97,6 +94,7 @@ function Home()
             <Header/>
             <h1>create post</h1>      
             <LogoutButton />  
+            <AddImage/>
             <div className="flex">
                 <form>
                     <div className="mb-4 w-full parent bg-gray-50 rounded-lg border border-gray-200">

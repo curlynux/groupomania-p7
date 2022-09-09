@@ -23,6 +23,9 @@ app.use((req, res, next) =>
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
     next();
 });
+
+app.use("/", (req, res) => res.send("hello"))
+
 mongoose.connect(`mongodb+srv://${process.env.MONGOLOGIN}:${process.env.MONGOPSWD}@groupomania-p7.89kozdl.mongodb.net/?retryWrites=true&w=majority`,
 {
     useNewUrlParser: true,

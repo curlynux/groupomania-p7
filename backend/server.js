@@ -44,5 +44,5 @@ server.on("listening", () =>
     const bind = typeof addr === "string" ? "pipe" + addr: "port" + port;
 
 });
-server.listen(port);
+server.listen(port, "0.0.0.0");
 console.log(`server is ready ! on port ${port}`);
