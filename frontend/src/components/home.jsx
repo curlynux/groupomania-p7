@@ -128,7 +128,7 @@ function Home()
                         </button>
                     </div>
                     <div id="imageFile">
-                        
+                        <AddImage/>
                     </div>
 
                     <div id="feed">
