@@ -47,9 +47,9 @@ function Home()
         setTimeout(() => bg.remove(), 5000)
     }
 
-    function createPost() 
+    function createPost(event) 
     {
-
+        event.preventDefault();
         const feed = document.getElementById("feed");
         const post = document.createElement("div");
         const login = document.createElement("span");
@@ -58,7 +58,9 @@ function Home()
         const divLike = document.createElement("div");
         const like = document.createElement("button");
         const disLike = document.createElement("button");
-        
+        const preview = document.getElementById("preview")
+        const postData = [];
+        // const textValue = document.getElementById("textarea").value;
 
         like.innerHTML = "👍";
         disLike.innerHTML = "👎";
@@ -76,18 +78,29 @@ function Home()
             image.src = `https://picsum.photos/id/${arr[0]}/200/300`
         }
         
-        login.innerHTML = "curlynux";
+        login.innerHTML = "login";
         feed.appendChild(post);
         post.appendChild(login);
         post.appendChild(image);
         image.alt = "img_post"
+        image.className = "post_image"
         console.log(post);
         post.append(divLike)
+        // image.src = preview.src
+        // postData.push(textValue)
+        postData.push(image.src)
+        console.log(postData);
+        localStorage.setItem("postData", postData)
 
         notification();
     }
 
-    
+    function addImage(event)
+    {
+        event.preventDefault();
+        const divImageFile = document.getElementById("imageFile")
+        
+    }
 
     return(
         <div id="main">
@@ -107,14 +120,16 @@ function Home()
                     </div>
                     <div className="notif"></div>
                     <div className="boxbtn">
-                        <button type="submit" onClick={() => createPost()} className="items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800">
+                        <button type="submit" onClick={(event) => createPost(event)} className="items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800">
                             publish post
                         </button>
-                        <button className="bg-transparent image font-semibold py-2 px-4">
+                        <button onClick={(event) => addImage(event)} className="bg-transparent image font-semibold py-2 px-4">
                             Add image
                         </button>
                     </div>
-                    <AddImage/>
+                    <div id="imageFile">
+                        
+                    </div>
 
                     <div id="feed">
                         <h1>Feed</h1>

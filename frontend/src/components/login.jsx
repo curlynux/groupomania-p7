@@ -16,7 +16,7 @@ function Login()
             password: password
         }
         try {
-                await fetch("http://curlynux1.freeboxos.fr:49154/login", 
+                await fetch("http://localhost:8080/login", 
             {
                 method: "POST",
                 mode: "cors",
