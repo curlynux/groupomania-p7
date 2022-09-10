@@ -2,25 +2,41 @@ import { useState } from "react";
 
 function AddImage()
 {
-    const image = document.getElementsByClassName("image")[0];
     const [selectedImage, setSelectedImage] = useState(null);
-    
-    return(
-        <div>
-            {selectedImage && (
-            <div>
-                <img alt="image" id="preview" src={URL.createObjectURL(selectedImage)} />
-                <br />
-                <button id="removePhoto" onClick={() => setSelectedImage(null)} >Remove</button>
-            </div>)}
-            <br/>
-            <input type="file" id="sendImage" name="UploadImage" onChange={event => 
-                {
-                    console.log(event.target.files[0])
-                    setSelectedImage(event.target.files[0])
-                }} />
-        </div>
-    )
+    const img = document.createElement("img");
+    const br = document.createElement("br");
+    const button = document.createElement("button");
+    const br2 = document.createElement("br");
+    const input = document.createElement("input");
+
+    img.setAttribute("alt", "image")
+    img.id = "preview";
+    img.src = URL.createObjectURL(selectedImage)
+
+    button.id = "removePhoto";
+    button.onclick = () => setSelectedImage(null)
+    button.innerHTML = "Remove";
+
+    input.setAttribute("type", "file");
+    input.id = "sendImage";
+    input.name = "UploadImage";
+    input.onchange = (event) => 
+    {
+        console.log(event.target.files[0]);
+        setSelectedImage(event.target.files[0]);
+    }
+
+    document.getElementsByClassName("justdiv")[0]
+    .appendChild(img)
+    document.getElementsByClassName("justdiv")[0]
+    .appendChild(br)
+    document.getElementsByClassName("justdiv")[0]
+    .appendChild(button)
+
+    document.getElementsByClassName("fileDiv")[0]
+    .appendChild(br2)
+    document.getElementsByClassName("fileDiv")[0]
+    .appendChild(input)
 }
 
 export default AddImage;
