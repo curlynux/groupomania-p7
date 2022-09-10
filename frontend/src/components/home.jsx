@@ -60,7 +60,8 @@ function Home()
         const disLike = document.createElement("button");
         const preview = document.getElementById("preview")
         const postData = [];
-        // const textValue = document.getElementById("textarea").value;
+        const textValue = document.getElementById("editor").value;
+        const textPost = document.createElement("p")
 
         like.innerHTML = "👍";
         disLike.innerHTML = "👎";
@@ -69,6 +70,7 @@ function Home()
         divLike.className = "vote";
         post.setAttribute("class", "post");
         login.setAttribute("class", "login");
+        textPost.innerHTML = textValue
     
         while(arr.length < 1)
         {
@@ -78,6 +80,7 @@ function Home()
             image.src = `https://picsum.photos/id/${arr[0]}/200/300`
         }
         
+
         login.innerHTML = "login";
         feed.appendChild(post);
         post.appendChild(login);
@@ -86,20 +89,14 @@ function Home()
         image.className = "post_image"
         console.log(post);
         post.append(divLike)
-        // image.src = preview.src
-        // postData.push(textValue)
+        post.appendChild(textPost)
+        image.src = preview.src
+        postData.push(textValue)
         postData.push(image.src)
         console.log(postData);
         localStorage.setItem("postData", postData)
 
         notification();
-    }
-
-    function addImage(event)
-    {
-        event.preventDefault();
-        const divImageFile = document.getElementById("imageFile")
-        
     }
 
     return(
@@ -123,14 +120,8 @@ function Home()
                         <button type="submit" onClick={(event) => createPost(event)} className="items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800">
                             publish post
                         </button>
-                        <button onClick={(event) => addImage(event)} className="bg-transparent image font-semibold py-2 px-4">
-                            Add image
-                        </button>
                     </div>
-                    <div id="imageFile">
-                        <AddImage/>
-                    </div>
-
+                    <AddImage/>
                     <div id="feed">
                         <h1>Feed</h1>
                     </div>
