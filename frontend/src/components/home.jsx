@@ -20,6 +20,28 @@ function Home()
     catch (error)
     {console.log(error)}
 
+    function sendPost()
+    {
+        const login = document.getElementsByClassName("login").value;
+        const imageUrl = document.getElementsByClassName("post_image").src;
+        const text = document.getElementsByClassName("text_post").value;
+        const like = document.getElementsByClassName("likeText").value
+        const disLike = document.getElementsByClassName("disLikeText").value;
+        const postData = {
+            login: login,
+            imageUrl: imageUrl,
+            post_text: text,
+            like: like,
+            disLike: disLike
+        }
+        fetch("http://localhost:8080/post", 
+        {
+            method: "POST",
+            mode: "cors",
+            body: JSON.stringify(postData)
+        }).then(response => console.log(response))
+    }
+
     function notification() 
     {
         const div = document.getElementsByClassName("notif")[0];
@@ -62,16 +84,26 @@ function Home()
         const postData = [];
         const textValue = document.getElementById("editor").value;
         const textPost = document.createElement("p")
+        const likeText = document.createElement("span")
+        const disLikeText = document.createElement("span")
 
+        likeText.className = "likeText"
+        disLikeText.className = "disLikeText"
         like.innerHTML = "👍";
         disLike.innerHTML = "👎";
         divLike.appendChild(like);
         divLike.appendChild(disLike);
         divLike.className = "vote";
+        likeText.innerHTML = 0
+        disLikeText.innerHTML = 0
+        divLike.appendChild(likeText)
+        divLike.appendChild(disLikeText)
+
         post.setAttribute("class", "post");
         login.setAttribute("class", "login");
+        textPost.className = "text_post"
         textPost.innerHTML = textValue
-    
+        
         while(arr.length < 1)
         {
             var r = Math.floor(Math.random() * 1000) + 1;
@@ -85,11 +117,13 @@ function Home()
         feed.appendChild(post);
         post.appendChild(login);
         post.appendChild(image);
+
         image.alt = "img_post"
         image.className = "post_image"
         console.log(post);
         post.append(divLike)
         post.appendChild(textPost)
+
         image.src = preview.src
         postData.push(textValue)
         postData.push(image.src)
@@ -97,6 +131,7 @@ function Home()
         localStorage.setItem("postData", postData)
 
         notification();
+        sendPost();
     }
 
     return(

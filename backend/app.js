@@ -5,6 +5,7 @@ const mongoose = require("mongoose")
 const app = express();
 const path = require("path");
 const morgan = require("morgan");
+const postRoutes = require("./api/routes/postRoute");
 
 require("dotenv").config()
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({extended: false}));
 
 app.use("/api/auth", userRoutes);
 app.use(userRoutes)
+app.use("/post", postRoutes)
 app.use(express.static(path.join(__dirname, '/public')));
 app.use((req, res, next) => 
 {
