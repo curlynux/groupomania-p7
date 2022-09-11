@@ -38,6 +38,10 @@ function Home()
         {
             method: "POST",
             mode: "cors",
+            headers: {
+                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`
+            },
             body: JSON.stringify(postData)
         }).then(response => console.log(response))
     }
