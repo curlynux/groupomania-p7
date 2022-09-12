@@ -23,19 +23,19 @@ function Home()
 
     function sendPost()
     {
-        const login = document.getElementsByClassName("login").value;
-        const imageUrl = document.getElementsByClassName("post_image").src;
-        const text = document.getElementsByClassName("text_post").value;
-        const like = document.getElementsByClassName("likeText").value
-        const disLike = document.getElementsByClassName("disLikeText").value;
+        const login = document.getElementsByClassName("login")[0].textContent;
+        const imageUrl = document.getElementsByClassName("post_image")[0].src;
+        const text = document.getElementsByClassName("text_post")[0].textContent;
+        const like = document.getElementsByClassName("likeText")[0].textContent;
+        const disLike = document.getElementsByClassName("disLikeText")[0].textContent;
         const postData = {
-            login: "curlynux",
-            imageUrl: "blob:http://localhost:3000/a2dac3a6-0b56-450e-8aaf-489dcce5ed8d",
-            post_text: "text text text",
-            like: 0,
-            disLike: 0
+            login: login,
+            imageUrl: imageUrl,
+            post_text: text,
+            like: like,
+            disLike: disLike
         }
-        
+
             console.log(postData);
             console.log(login);
             console.log(imageUrl);
@@ -58,7 +58,6 @@ function Home()
         }).then(response => response.json())
         .then(data => console.log(data))
     }
-
     function notification() 
     {
         const div = document.getElementsByClassName("notif")[0];
@@ -83,7 +82,7 @@ function Home()
         bg.appendChild(icon);
 
 
-        setTimeout(() => {bg.remove(); sendPost()}, 5000)
+        setTimeout(() => {bg.remove()}, 5000)
     }
 
     function createPost(event) 
@@ -99,7 +98,7 @@ function Home()
         const disLike = document.createElement("button");
         const preview = document.getElementById("preview")
         const postData = [];
-        const textValue = document.getElementById("editor").value;
+        var textValue = document.getElementById("editor").value;
         const textPost = document.createElement("p")
         const likeText = document.createElement("span")
         const disLikeText = document.createElement("span")
@@ -150,8 +149,9 @@ function Home()
         post.appendChild(textPost)
 
         image.src = preview.src
-        postData.push(textValue)
-        postData.push(image.src)
+        const newPostData = new Array(textValue, image.src)
+
+        postData.push(newPostData)
         console.log(postData);
         localStorage.setItem("postData", postData)
 
@@ -160,9 +160,12 @@ function Home()
         {
             loaderBg.remove()
             notification();
+
         }
         // while(i <= 5)
             setTimeout(removeLoader, 5000)
+        sendPost()
+        textValue = ""
     }
     
 

@@ -4,9 +4,17 @@ const Post = require("../models/postModel");
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
-console.log("test post");
+
 exports.test = (req, res) => 
 {
-    console.log("test post if works");
     console.log(req.body);
+    const post = new Post({
+        login: req.body.login,
+        imageUrl: req.body.imageUrl,
+        post_text: req.body.post_text,
+        like: req.body.like,
+        disLike: req.body.disLike
+    })
+    post.save().then(() => res.status(201).json({message: "post created"}))
+    
 }
