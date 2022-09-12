@@ -2,6 +2,7 @@ import "../assets/home.css"
 import Header from "./header"
 import LogoutButton from "./logoutButton";
 import AddImage from "./addImage";
+import "../assets/loader.css"
 
 function Home() 
 {
@@ -28,22 +29,34 @@ function Home()
         const like = document.getElementsByClassName("likeText").value
         const disLike = document.getElementsByClassName("disLikeText").value;
         const postData = {
-            login: login,
-            imageUrl: imageUrl,
-            post_text: text,
-            like: like,
-            disLike: disLike
+            login: "curlynux",
+            imageUrl: "blob:http://localhost:3000/a2dac3a6-0b56-450e-8aaf-489dcce5ed8d",
+            post_text: "text text text",
+            like: 0,
+            disLike: 0
         }
+        
+            console.log(postData);
+            console.log(login);
+            console.log(imageUrl);
+            console.log(text);
+            console.log(like);
+            console.log(disLike);
+        
+        const postHeader = new Headers({
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+            "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`
+        })
         fetch("http://localhost:8080/post", 
         {
             method: "POST",
             mode: "cors",
-            headers: {
-                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-                "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`
-            },
+            headers: postHeader,
             body: JSON.stringify(postData)
-        }).then(response => console.log(response))
+        }).then(response => response.json())
+        .then(data => console.log(data))
     }
 
     function notification() 
@@ -70,7 +83,7 @@ function Home()
         bg.appendChild(icon);
 
 
-        setTimeout(() => bg.remove(), 5000)
+        setTimeout(() => {bg.remove(); sendPost()}, 5000)
     }
 
     function createPost(event) 
@@ -90,6 +103,9 @@ function Home()
         const textPost = document.createElement("p")
         const likeText = document.createElement("span")
         const disLikeText = document.createElement("span")
+        const loaderBg = document.createElement("div")
+        const loader = document.createElement("div")
+
 
         likeText.className = "likeText"
         disLikeText.className = "disLikeText"
@@ -105,9 +121,14 @@ function Home()
 
         post.setAttribute("class", "post");
         login.setAttribute("class", "login");
-        textPost.className = "text_post"
-        textPost.innerHTML = textValue
+        textPost.className = "text_post";
+        textPost.innerHTML = textValue;
         
+        loaderBg.className = "bg";
+        loader.className = "loader";
+        document.getElementById("main").appendChild(loaderBg);
+        loaderBg.appendChild(loader);
+
         while(arr.length < 1)
         {
             var r = Math.floor(Math.random() * 1000) + 1;
@@ -134,24 +155,27 @@ function Home()
         console.log(postData);
         localStorage.setItem("postData", postData)
 
-        notification();
-        sendPost();
+        var i = 0;
+        var removeLoader = () => 
+        {
+            loaderBg.remove()
+            notification();
+        }
+        // while(i <= 5)
+            setTimeout(removeLoader, 5000)
     }
+    
 
     return(
         <div id="main">
             <Header/>
             <h1>create post</h1>      
             <LogoutButton />  
-            
             <div className="flex">
-                <form>
+                <form name="form">
                     <div className="mb-4 w-full parent bg-gray-50 rounded-lg border border-gray-200">
                         <div className="py-2 px-4 bg-white rounded-b-lg text">
-                            <textarea id="editor" rows="8" className="block px-0 w-full text-sm text-gray-800 bg-white border-0  focus:ring-0 " placeholder="ecrire un post" required></textarea>
-                            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                                <div className="bg-blue-600 h-2.5 rounded-full" style={{width: "45%"}}></div>
-                            </div>
+                            <textarea id="editor" rows="8" name="text" className="block px-0 w-full text-sm text-gray-800 bg-white border-0  focus:ring-0 " placeholder="ecrire un post" required></textarea>
                         </div>
                     </div>
                     <div className="notif"></div>
