@@ -142,30 +142,29 @@ function Home()
         post.appendChild(login);
         post.appendChild(image);
 
-        image.alt = "img_post"
-        image.className = "post_image"
+        image.alt = "img_post";
+        image.className = "post_image";
         console.log(post);
-        post.append(divLike)
-        post.appendChild(textPost)
+        post.append(divLike);
+        post.appendChild(textPost);
 
-        image.src = preview.src
-        const newPostData = new Array(textValue, image.src)
+        image.src = preview.src;
+        const newPostData = [textValue, image.src];
 
-        postData.push(newPostData)
+        postData.push(newPostData);
         console.log(postData);
-        localStorage.setItem("postData", postData)
+        localStorage.setItem("postData", postData);
 
-        var i = 0;
         var removeLoader = () => 
         {
-            loaderBg.remove()
+            loaderBg.remove();
             notification();
+            // document.getElementById("editor").value = "";
 
         }
         // while(i <= 5)
             setTimeout(removeLoader, 5000)
         sendPost()
-        textValue = ""
     }
     
 
