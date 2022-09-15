@@ -2,8 +2,14 @@ import { useState } from "react";
 
 function AddImage()
 {
-    const image = document.getElementsByClassName("image")[0];
     const [selectedImage, setSelectedImage] = useState(null);
+    function displayFile(event) 
+    {
+        console.log(event.target.files[0])
+        setSelectedImage(event.target.files[0])
+        var files = event.target.files[0]
+        
+    }
     
     return(
         <div>
@@ -14,11 +20,7 @@ function AddImage()
                 <button id="removePhoto" onClick={() => setSelectedImage(null)} >Remove</button>
             </div>)}
             <br/>
-            <input type="file" id="sendImage" name="UploadImage" onChange={event => 
-                {
-                    console.log(event.target.files[0])
-                    setSelectedImage(event.target.files[0])
-                }} />
+            <input type="file" id="sendImage" name="UploadImage" onChange={displayFile}/>
         </div>
     )
 }

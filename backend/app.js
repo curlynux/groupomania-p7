@@ -6,8 +6,8 @@ const app = express();
 const path = require("path");
 const morgan = require("morgan");
 const postRoutes = require("./api/routes/postRoute");
-
 require("dotenv").config()
+const multer = require("./middlewares/multer-config");
 
 app.use(cors());
 app.use(morgan("dev"))
@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended: false}));
 app.use("/api/auth", userRoutes);
 app.use(userRoutes);
 app.use(postRoutes);
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/images')));
 app.use((req, res, next) => 
 {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -26,7 +26,7 @@ app.use((req, res, next) =>
     next();
 });
 
-app.use("/", (req, res) => res.send("hello"))
+// app.use("/", (req, res) => res.send("hello"))
 
 mongoose.connect(`mongodb+srv://${process.env.MONGOLOGIN}:${process.env.MONGOPSWD}@groupomania-p7.89kozdl.mongodb.net/?retryWrites=true&w=majority`,
 {

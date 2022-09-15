@@ -21,42 +21,39 @@ function Home()
     catch (error)
     {console.log(error)}
 
-    function sendPost()
+    function sendPost(event)
     {
+        event.preventDefault();
+        createPost()
         const login = document.getElementsByClassName("login")[0].textContent;
         const imageUrl = document.getElementsByClassName("post_image")[0].src;
         const text = document.getElementsByClassName("text_post")[0].textContent;
         const like = document.getElementsByClassName("likeText")[0].textContent;
         const disLike = document.getElementsByClassName("disLikeText")[0].textContent;
-        const postData = {
-            login: login,
-            imageUrl: imageUrl,
-            post_text: text,
-            like: like,
-            disLike: disLike
-        }
+        const file = event.target[3].files[0]
+        const fileData = new FormData()
+        console.log(event.target[3].files[0]);
 
-            console.log(postData);
-            console.log(login);
-            console.log(imageUrl);
-            console.log(text);
-            console.log(like);
-            console.log(disLike);
-        
-        const postHeader = new Headers({
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-            "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`
-        })
-        fetch("http://localhost:8080/post", 
+        fileData.append("image", file)
+        fileData.append("login", login)
+        fileData.append("imageUrl", imageUrl)
+        fileData.append("post_text", text)
+        fileData.append("like", like)
+        fileData.append("disLike", disLike)
+        try
         {
-            method: "POST",
-            mode: "cors",
-            headers: postHeader,
-            body: JSON.stringify(postData)
-        }).then(response => response.json())
-        .then(data => console.log(data))
+            fetch("http://localhost:8080/post", 
+            {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                    "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
+                },
+                body: fileData
+            }).then(response => console.log(response))
+        } catch (error)
+        {console.log(error)}
     }
     function notification() 
     {
@@ -85,9 +82,8 @@ function Home()
         setTimeout(() => {bg.remove()}, 5000)
     }
 
-    function createPost(event) 
+    function createPost() 
     {
-        event.preventDefault();
         const feed = document.getElementById("feed");
         const post = document.createElement("div");
         const login = document.createElement("span");
@@ -159,12 +155,12 @@ function Home()
         {
             loaderBg.remove();
             notification();
+            sendPost()
+
             // document.getElementById("editor").value = "";
 
         }
-        // while(i <= 5)
             setTimeout(removeLoader, 5000)
-        sendPost()
     }
     
 
@@ -174,15 +170,15 @@ function Home()
             <h1>create post</h1>      
             <LogoutButton />  
             <div className="flex">
-                <form name="form">
+                <form name="form" onSubmit={(event) => sendPost(event)}>
                     <div className="mb-4 w-full parent bg-gray-50 rounded-lg border border-gray-200">
                         <div className="py-2 px-4 bg-white rounded-b-lg text">
-                            <textarea id="editor" rows="8" name="text" className="block px-0 w-full text-sm text-gray-800 bg-white border-0  focus:ring-0 " placeholder="ecrire un post" required></textarea>
+                            <textarea id="editor" rows="8" name="text" className="block px-0 w-full text-sm text-gray-800 bg-white border-0  focus:ring-0 " placeholder="ecrire un post"></textarea>
                         </div>
                     </div>
                     <div className="notif"></div>
                     <div className="boxbtn">
-                        <button type="submit" onClick={(event) => createPost(event)} className="items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800">
+                        <button type="submit" className="items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800">
                             publish post
                         </button>
                     </div>
