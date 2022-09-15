@@ -25,6 +25,6 @@ exports.createPost = (req, res) =>
 exports.getPost = (req, res) =>
 {
     Post.find()
-    .then(posts => res.status(200).json({posts}))
+    .then(posts => res.status(200).json(posts))
     .catch(error => res.status(404).json({error}))
 }

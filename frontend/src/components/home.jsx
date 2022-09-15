@@ -79,7 +79,11 @@ function Home()
         bg.appendChild(icon);
 
 
-        setTimeout(() => {bg.remove()}, 5000)
+        setTimeout(() => 
+        {
+            bg.remove()
+            getPost();
+        }, 5000)
     }
 
     function createPost() 
@@ -174,13 +178,14 @@ function Home()
         {
             return res.json().then(data => 
             {
+                console.log(data);
                 var i = 0;
                 for(var item in data)
                 {
                     console.log(data[item]);
                     while(i <= data[item].length)
                     {
-                        console.log(data[item][i++].post);
+                        console.log(data[item][i++].post.post_text);
                     }
                 }
             });
