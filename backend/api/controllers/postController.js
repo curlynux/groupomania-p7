@@ -21,3 +21,10 @@ exports.createPost = (req, res) =>
         }})
         post.save().then(() => res.status(201).json({message: "post created"}))
 }
+
+exports.getPost = (req, res) =>
+{
+    Post.find()
+    .then(posts => res.status(200).json({posts}))
+    .catch(error => res.status(404).json({error}))
+}

@@ -129,7 +129,7 @@ function Home()
             var r = Math.floor(Math.random() * 1000) + 1;
             if(arr.indexOf(r) === -1) arr.push(r);
             console.log(arr[0]);
-            image.src = `https://picsum.photos/id/${arr[0]}/200/300`
+            // image.src = `https://picsum.photos/id/${arr[0]}/200/300`
         }
         
 
@@ -156,14 +156,38 @@ function Home()
             loaderBg.remove();
             notification();
             sendPost()
-
-            // document.getElementById("editor").value = "";
-
         }
             setTimeout(removeLoader, 5000)
     }
     
-
+    function getPost()
+    {
+        fetch("http://localhost:8080/post", 
+        {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
+            }
+        }).then(res => 
+        {
+            return res.json().then(data => 
+            {
+                var i = 0;
+                for(var item in data)
+                {
+                    console.log(data[item]);
+                    while(i <= data[item].length)
+                    {
+                        console.log(data[item][i++].post);
+                    }
+                }
+            });
+        })
+        console.log("GET REQUEST");
+    }
+    getPost()
     return(
         <div id="main">
             <Header/>
