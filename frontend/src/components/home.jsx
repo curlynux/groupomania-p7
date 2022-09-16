@@ -80,10 +80,7 @@ function Home()
 
 
         setTimeout(() => 
-        {
-            bg.remove()
-            getPost();
-        }, 5000)
+        {bg.remove(); getPost()}, 5000)
     }
 
     function createPost() 
@@ -113,31 +110,22 @@ function Home()
         divLike.appendChild(like);
         divLike.appendChild(disLike);
         divLike.className = "vote";
-        likeText.innerHTML = 0
-        disLikeText.innerHTML = 0
+        // likeText.innerHTML = 0
+        // disLikeText.innerHTML = 0
         divLike.appendChild(likeText)
         divLike.appendChild(disLikeText)
 
         post.setAttribute("class", "post");
         login.setAttribute("class", "login");
         textPost.className = "text_post";
-        textPost.innerHTML = textValue;
+        // textPost.innerHTML = textValue;
         
         loaderBg.className = "bg";
         loader.className = "loader";
         document.getElementById("main").appendChild(loaderBg);
         loaderBg.appendChild(loader);
 
-        while(arr.length < 1)
-        {
-            var r = Math.floor(Math.random() * 1000) + 1;
-            if(arr.indexOf(r) === -1) arr.push(r);
-            console.log(arr[0]);
-            // image.src = `https://picsum.photos/id/${arr[0]}/200/300`
-        }
-        
-
-        login.innerHTML = "login";
+        // login.innerHTML = "login";
         feed.appendChild(post);
         post.appendChild(login);
         post.appendChild(image);
@@ -148,7 +136,7 @@ function Home()
         post.append(divLike);
         post.appendChild(textPost);
 
-        image.src = preview.src;
+        // image.src = preview.src;
         const newPostData = [textValue, image.src];
 
         postData.push(newPostData);
@@ -166,6 +154,12 @@ function Home()
     
     function getPost()
     {
+        const login = document.getElementsByClassName("login");
+        const image = document.getElementsByClassName("post_image");
+        const likeText = document.getElementsByClassName("likeText");
+        const disLikeText = document.getElementsByClassName("disLikeText");
+        const textPost = document.getElementsByClassName("text_post")
+
         fetch("http://localhost:8080/post", 
         {
             method: "GET",
@@ -176,21 +170,19 @@ function Home()
             }
         }).then(res => 
         {
+            var i = 0;
+            var j = 0;
             return res.json().then(data => 
             {
                 console.log(data);
-                var i = 0;
-                for(var item in data)
+                for(var item of data)
                 {
-                    console.log(data[item]);
-                    while(i <= data[item].length)
-                    {
-                        console.log(data[item][i++].post.post_text);
-                    }
+                    console.log(item.post.imageUrl);
+                    console.log("test");
                 }
+                
             });
         })
-        console.log("GET REQUEST");
     }
     getPost()
     return(
