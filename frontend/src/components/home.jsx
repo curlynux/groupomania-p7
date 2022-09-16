@@ -177,8 +177,9 @@ function Home()
                 console.log(data);
                 for(var item of data)
                 {
-                    console.log(item.post.imageUrl);
-                    console.log("test");
+                    console.log(item.post);
+                    textPost.innerHTML = item.post.post_text;
+                    image[0].src = item.post.imageUrl
                 }
                 
             });
