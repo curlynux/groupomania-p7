@@ -89,7 +89,6 @@ function Home()
         const post = document.createElement("div");
         const login = document.createElement("span");
         const image = document.createElement("img");
-        var arr = [];
         const divLike = document.createElement("div");
         const like = document.createElement("button");
         const disLike = document.createElement("button");
@@ -107,14 +106,15 @@ function Home()
         disLikeText.className = "disLikeText"
         like.innerHTML = "👍";
         disLike.innerHTML = "👎";
-        divLike.appendChild(like);
-        divLike.appendChild(disLike);
+        // divLike.appendChild(like);
+        // divLike.appendChild(disLike);
         divLike.className = "vote";
         // likeText.innerHTML = 0
         // disLikeText.innerHTML = 0
-        divLike.appendChild(likeText)
-        divLike.appendChild(disLikeText)
-
+        // divLike.appendChild(likeText);
+        // divLike.appendChild(disLikeText);
+        // like.className = "likeButton"
+        // disLike.className = "disLikeButton"
         post.setAttribute("class", "post");
         login.setAttribute("class", "login");
         textPost.className = "text_post";
@@ -125,16 +125,16 @@ function Home()
         document.getElementById("main").appendChild(loaderBg);
         loaderBg.appendChild(loader);
 
-        // login.innerHTML = "login";
-        feed.appendChild(post);
-        post.appendChild(login);
-        post.appendChild(image);
+        // login.innerHTML = "superman";
+        // feed.appendChild(post);
+        // post.appendChild(login);
+        // post.appendChild(image);
 
         image.alt = "img_post";
         image.className = "post_image";
         console.log(post);
-        post.append(divLike);
-        post.appendChild(textPost);
+        // post.append(divLike);
+        // post.appendChild(textPost);
 
         // image.src = preview.src;
         const newPostData = [textValue, image.src];
@@ -153,13 +153,7 @@ function Home()
     }
     
     function getPost()
-    {
-        const login = document.getElementsByClassName("login");
-        const image = document.getElementsByClassName("post_image");
-        const likeText = document.getElementsByClassName("likeText");
-        const disLikeText = document.getElementsByClassName("disLikeText");
-        const textPost = document.getElementsByClassName("text_post")
-
+    {   
         fetch("http://localhost:8080/post", 
         {
             method: "GET",
@@ -174,12 +168,51 @@ function Home()
             var j = 0;
             return res.json().then(data => 
             {
-                console.log(data);
+                // console.log(data);
                 for(var item of data)
                 {
-                    console.log(item.post);
-                    textPost.innerHTML = item.post.post_text;
-                    image[0].src = item.post.imageUrl
+                    // console.log(item.post);
+                    if(data.length > 1)
+                    {
+                        const feed = document.getElementById("feed");
+                        const post = document.createElement("div");
+                        const login = document.createElement("span");
+                        const image = document.createElement("img");
+                        const divLike = document.createElement("div");
+                        const like = document.createElement("button");
+                        const disLike = document.createElement("button");
+                        const textPost = document.createElement("p");
+                        const likeText = document.createElement("span");
+                        const disLikeText = document.createElement("span");
+
+                        post.className = "post";
+                        login.className = "login";
+                        image.className = "post_image";
+                        likeText.className = "likeText"
+                        disLikeText.className = "disLikeText"
+                        textPost.className = "text_post";
+                        like.className = "likeButton";
+                        disLike.className = "disLikeButton";
+                        
+                        
+                        feed.appendChild(post);
+                        post.appendChild(login);
+                        post.appendChild(image);
+                        
+                        post.appendChild(divLike);
+                        divLike.appendChild(like);
+                        divLike.appendChild(disLike);
+                        divLike.appendChild(likeText);
+                        divLike.appendChild(disLikeText);
+                        post.appendChild(textPost);
+                        
+                        login.innerHTML = item.post.login;
+                        image.src = item.post.imageUrl;
+                        like.innerHTML = "👍";
+                        disLike.innerHTML = "👎";
+                        textPost.innerHTML = item.post.post_text;
+                    }
+                    i++;
                 }
                 
             });
