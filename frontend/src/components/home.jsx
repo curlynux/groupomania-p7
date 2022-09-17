@@ -49,6 +49,22 @@ function Home()
         {bg.remove(); getPost()}, 5000)
     }
 
+    fetch("http://localhost:8080/user", 
+        {
+            method: "GET",
+            mode: "cors",
+            headers: {
+            "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+            "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`
+            }
+        }).then(res => 
+        {
+            console.log(res);
+            res.json().then(data => 
+            {
+                localStorage.setItem("login", data.username)
+            });
+        });
     function createPost(event) 
     {
         event.preventDefault();
@@ -72,22 +88,7 @@ function Home()
         
         console.log(event.target[3].files[0]);
 
-        fetch("http://localhost:8080/user", 
-        {
-            method: "GET",
-            mode: "cors",
-            headers: {
-            "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-            "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`
-            }
-        }).then(res => 
-        {
-            console.log(res);
-            res.json().then(data => 
-            {
-                localStorage.setItem("login", data.username)
-            });
-        });
+        
 
         fileData.append("image", file)
         fileData.append("login", localStorage.getItem("login"))
@@ -143,7 +144,7 @@ function Home()
                 for(var item of data)
                 {
                     // console.log(item.post);
-                    if(data.length > 1)
+                    if(data.length > 0)
                     {
                         const feed = document.getElementById("feed");
                         const post = document.createElement("div");
