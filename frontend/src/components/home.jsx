@@ -72,13 +72,6 @@ function Home()
         
         console.log(event.target[3].files[0]);
 
-        fileData.append("image", file)
-        fileData.append("login", login.value)
-        fileData.append("imageUrl", JSON.stringify(file.name))
-        fileData.append("post_text", textValue)
-        fileData.append("like", 0)
-        fileData.append("disLike", 0)
-        
         fetch("http://localhost:8080/user", 
         {
             method: "GET",
@@ -87,7 +80,21 @@ function Home()
             "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
             "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`
             }
-        }).then(res => console.log(res)).then(data => console.log(data))
+        }).then(res => 
+        {
+            console.log(res);
+            res.json().then(data => 
+            {
+                localStorage.setItem("login", data.username)
+            });
+        });
+
+        fileData.append("image", file)
+        fileData.append("login", localStorage.getItem("login"))
+        fileData.append("imageUrl", JSON.stringify(file.name))
+        fileData.append("post_text", textValue)
+        fileData.append("like", 0)
+        fileData.append("disLike", 0)
         
         try
         {

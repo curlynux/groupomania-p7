@@ -78,6 +78,12 @@ exports.username = (req, res) =>
     .then(user => 
     {
         console.log(user)
-        res.json(user)
+        if(user) 
+        {
+            console.log("user sending");
+            res.status(200).json(user)
+            console.log("user sent");
+        
+        } 
     })
 }
