@@ -69,3 +69,15 @@ exports.login = (req, res, next) =>
         res.status(500).json({error})
     });
 }
+
+exports.username = (req, res) =>
+{
+    console.log("user found !");
+    console.log(req.headers["x-authenticated-userid"]);
+    User.findOne({_id: req.headers["x-authenticated-userid"]})
+    .then(user => 
+    {
+        console.log(user)
+        res.json(user)
+    })
+}
