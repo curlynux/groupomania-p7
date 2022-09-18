@@ -31,6 +31,12 @@ exports.getPost = (req, res) =>
 
 exports.getOnePost = (req, res) =>
 {
-    Post.findOne({_id: req.post.id}).then(post => {console.log(post)})
+    console.log(req.params);
+    Post.findOne({_id: req.params.id})
+    .then(post => 
+        {
+            console.log(post)
+            return res.status(200).json(post)
+        })
     console.log("get one post");
 }
