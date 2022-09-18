@@ -3,6 +3,8 @@ import Header from "./header"
 import LogoutButton from "./logoutButton";
 import AddImage from "./addImage";
 import "../assets/loader.css"
+// import { useNavigate } from "react-router-dom";
+
 
 function Home() 
 {
@@ -69,20 +71,10 @@ function Home()
     {
         event.preventDefault();
         console.log(event);
-        const feed = document.getElementById("feed");
-        const post = document.createElement("div");
-        const login = document.createElement("span");
-        const image = document.createElement("img");
-        const divLike = document.createElement("div");
-        const like = document.createElement("button");
-        const disLike = document.createElement("button");
-        const preview = document.getElementById("preview")
+        
         var textValue = document.getElementById("editor").value;
-        const textPost = document.createElement("p")
         const loaderBg = document.createElement("div")
         const loader = document.createElement("div")
-        const likeText = document.getElementsByClassName("likeTExt")
-        const disLikeText = document.getElementsByClassName("disLikeTExt")
         const file = event.target[3].files[0]
         const fileData = new FormData()
         
@@ -156,6 +148,7 @@ function Home()
                         const textPost = document.createElement("p");
                         const likeText = document.createElement("span");
                         const disLikeText = document.createElement("span");
+                        const a = document.createElement("a")
 
                         post.className = "post";
                         login.className = "login";
@@ -168,6 +161,8 @@ function Home()
                         
                         
                         feed.appendChild(post);
+                        feed.appendChild(a);
+                        a.appendChild(post);
                         post.appendChild(login);
                         post.appendChild(image);
                         
@@ -178,18 +173,41 @@ function Home()
                         divLike.appendChild(disLikeText);
                         post.appendChild(textPost);
                         
+
                         login.innerHTML = item.post.login;
                         image.src = item.post.imageUrl;
                         like.innerHTML = "👍";
                         disLike.innerHTML = "👎";
                         textPost.innerHTML = item.post.post_text;
+                        post.dataset.id = item._id;
+                        a.href = `http://localhost:3000/post/${post.dataset.id}`
+                        console.log(post["dataset"].id);
+
+                        
                     }
                 }
                 
             });
         })
+    
     }
     getPost()
+    // const navigate = useNavigate();
+
+//     function goToPost()
+//     {
+//         const post = document.getElementsByClassName("post");
+//         // var i = 0;
+//         // const a = document.createElement("a");
+//         // while(i <= post.length)
+//         // {
+//         //     // post[i++].onclick = () => console.log("post click");
+            
+//         //     // console.log(post[i]);
+            
+//         // }
+//     }
+// setTimeout(() => goToPost(), 2000)
     return(
         <div id="main">
             <Header/>

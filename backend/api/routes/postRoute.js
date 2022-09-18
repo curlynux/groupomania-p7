@@ -10,5 +10,5 @@ const multer = require("../../middlewares/multer-config")
 // router.use(jsonParser)
 router.post("/post", auth, jsonParser, urlencodedParser, multer, post.createPost)
 router.get("/post", auth, jsonParser, urlencodedParser, post.getPost)
-
+router.get("/post/:id", auth, jsonParser, urlencodedParser, post.getOnePost)
 module.exports = router;

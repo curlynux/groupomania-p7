@@ -28,3 +28,9 @@ exports.getPost = (req, res) =>
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(404).json({error}))
 }
+
+exports.getOnePost = (req, res) =>
+{
+    Post.findOne({_id: req.post.id}).then(post => {console.log(post)})
+    console.log("get one post");
+}

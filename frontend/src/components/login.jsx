@@ -41,9 +41,6 @@ function Login()
             {console.log(error)}
     }
    
-    
-    // useEffect(() => {},[navigate, token])
-
     return(
         <div>
             <Header/>

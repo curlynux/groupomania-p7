@@ -78,7 +78,6 @@ div.post
     display: flex;
     margin: 0 auto;
     flex-direction: column;
-    width: max-content;
     border: 3px solid #FFD7D7;
     border-radius: 30px;
     margin-bottom: 100px;
@@ -119,10 +118,4 @@ div.vote button
     padding: 10px;
     border: 1px solid black;
     border-radius: 10px;
-}
-
-#preview 
-{
-    /* position: absolute; */
-    /* right: 60px; */
 }
