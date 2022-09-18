@@ -191,23 +191,7 @@ function Home()
         })
     
     }
-    getPost()
-    // const navigate = useNavigate();
-
-//     function goToPost()
-//     {
-//         const post = document.getElementsByClassName("post");
-//         // var i = 0;
-//         // const a = document.createElement("a");
-//         // while(i <= post.length)
-//         // {
-//         //     // post[i++].onclick = () => console.log("post click");
-            
-//         //     // console.log(post[i]);
-            
-//         // }
-//     }
-// setTimeout(() => goToPost(), 2000)
+    
     return(
         <div id="main">
             <Header/>
