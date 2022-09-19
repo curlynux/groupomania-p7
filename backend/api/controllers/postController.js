@@ -43,5 +43,9 @@ exports.getOnePost = (req, res) =>
 
 exports.deletePost = (req, res) =>
 {
+    console.log(req);
+    console.log("voici le body de l'id");
+    console.log(req.headers["content-type"]);
     console.log(req.body);
+    console.log(req.params);
 }

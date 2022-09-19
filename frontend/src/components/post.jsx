@@ -5,19 +5,20 @@ import "../assets/post.css";
 function DisplayOnePost()
 {
   let { id } = useParams();
-
+  
   fetch(`http://localhost:8080/post/${id}`, 
   {
     method: "GET",
     mode: "cors",
     headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
         "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
         "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
     }
   }).then(async response => 
     {
         console.log(response)
-        console.log("post called");
         await response.json().then(data => 
         {
           const login = document.createElement("span");
@@ -54,19 +55,34 @@ function DisplayOnePost()
     function deletePost() 
     {
       const post = document.getElementsByClassName("post");
-      fetch("http://localhost:8080/post", 
+      const deleteButton = document.getElementsByClassName("publish");
+      const id = new Object();
+      id.post_id = post[0].dataset.id
+      
+      console.log(id);
+      deleteButton[0].addEventListener("click", () => 
       {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-          "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
-      },
-      body: JSON.stringify(post[0].dataset.id)
+        try {
+          fetch(`http://localhost:8080/delete/${id.post_id}`, 
+          {
+            method: "POST",
+            mode: "cors",
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+              "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
+          },
+          body: JSON.stringify(id)
+          }).then(res => console.log(res))
+        } catch (error) {
+          console.log(error);
+        }
+        console.log("click");
       })
       console.log(post[0].dataset.id);
     }
-    deletePost()
+    setTimeout(() => deletePost(), 1000)
   return(<div>
     <Header/>
     <h1>post</h1>
