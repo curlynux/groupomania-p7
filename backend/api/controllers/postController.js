@@ -40,3 +40,8 @@ exports.getOnePost = (req, res) =>
         })
     console.log("get one post");
 }
+
+exports.deletePost = (req, res) =>
+{
+    console.log(req.body);
+}

@@ -191,7 +191,7 @@ function Home()
         })
     
     }
-    
+    getPost();
     return(
         <div id="main">
             <Header/>
