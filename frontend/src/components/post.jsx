@@ -1,6 +1,7 @@
 import Header from "./header"
 import { useParams } from 'react-router-dom';
 import "../assets/post.css";
+import { useNavigate } from "react-router-dom";
 
 function DisplayOnePost()
 {
@@ -51,6 +52,7 @@ function DisplayOnePost()
           return;
         });
     });
+    const navigate = useNavigate();
 
     function deletePost() 
     {
@@ -77,7 +79,7 @@ function DisplayOnePost()
           }).then(res => 
           {
             console.log(res)
-            window.location.reload()
+            navigate("/home", {replace: true})
           });
         } catch (error) {
           console.log(error);
