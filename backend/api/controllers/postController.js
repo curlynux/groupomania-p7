@@ -48,4 +48,12 @@ exports.deletePost = (req, res) =>
     console.log(req.headers["content-type"]);
     console.log(req.body);
     console.log(req.params);
+    Post.deleteOne({_id: req.params.id})
+    .then(post => 
+    {
+        console.log(post);
+        console.log("post deleted !");
+        return res.status(200).json({message: "post deleted sucessfully !"})
+    });
+    
 }

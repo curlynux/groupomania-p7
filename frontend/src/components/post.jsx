@@ -74,13 +74,18 @@ function DisplayOnePost()
               "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
           },
           body: JSON.stringify(id)
-          }).then(res => console.log(res))
+          }).then(res => 
+          {
+            console.log(res)
+            window.location.reload()
+          });
         } catch (error) {
           console.log(error);
         }
         console.log("click");
       })
       console.log(post[0].dataset.id);
+
     }
     setTimeout(() => deletePost(), 1000)
   return(<div>
