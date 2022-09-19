@@ -58,9 +58,10 @@ function DisplayOnePost()
     {
       const post = document.getElementsByClassName("post");
       const deleteButton = document.getElementsByClassName("publish");
-      const id = new Object();
+      const id = {}
       id.post_id = post[0].dataset.id
-      
+      id.image = post[0].childNodes[1].src;
+      console.log(post[0].childNodes[1].src);
       console.log(id);
       deleteButton[0].addEventListener("click", () => 
       {

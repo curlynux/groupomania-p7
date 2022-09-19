@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const Post = require("../models/postModel");
-
+const fs = require("fs")
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
@@ -43,17 +43,23 @@ exports.getOnePost = (req, res) =>
 
 exports.deletePost = (req, res) =>
 {
-    console.log(req);
     console.log("voici le body de l'id");
     console.log(req.headers["content-type"]);
     console.log(req.body);
+    console.log(req.body.image);
     console.log(req.params);
-    Post.deleteOne({_id: req.params.id})
-    .then(post => 
-    {
-        console.log(post);
-        console.log("post deleted !");
-        return res.status(200).json({message: "post deleted sucessfully !"})
-    });
+    var filename = req.body.image.split("/")[4]
+    console.log("FILE ", filename);
     
+    // //add fs.unlink to delete image
+    fs.unlink(`images/${filename}`, () => 
+    {
+    Post.deleteOne({_id: req.params.id})
+    .then((post) => {
+        console.log(filename);
+        console.log("post deleted !");
+        return res.status(200).json({message: "post supprimé !"})
+        console.log(`post deleted ! id: ${req.params.id}`);
+        });
+    });
 }
