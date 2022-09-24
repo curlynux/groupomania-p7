@@ -5,9 +5,9 @@ function AddImage()
     const [selectedImage, setSelectedImage] = useState(null);
     function displayFile(event) 
     {
-        console.log(event.target.files[0])
-        setSelectedImage(event.target.files[0])
-        var files = event.target.files[0]
+        console.log(event.target.files[0]);
+        setSelectedImage(event.target.files[0]);
+        var files = event.target.files[0];
         
     }
     

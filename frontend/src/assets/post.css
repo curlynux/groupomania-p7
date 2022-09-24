@@ -5,3 +5,24 @@ div.post img
     margin: 5px;
     border-radius: 10px;
 }
+
+div.divButton
+{
+    display: flex;
+    justify-content: space-around;
+}
+
+div p
+{
+    overflow-wrap: break-word;
+}
+
+button.modify
+{
+    background-color: #FD2D01;
+}
+
+button.applyModif
+{
+    background-color: #FFD7D7;
+}

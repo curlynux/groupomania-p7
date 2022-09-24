@@ -19,7 +19,6 @@ function DisplayOnePost()
     }
   }).then(async response => 
     {
-        console.log(response)
         await response.json().then(data => 
         {
           const login = document.createElement("span");
@@ -30,7 +29,11 @@ function DisplayOnePost()
           const textPost = document.createElement("p");
           const post = document.getElementsByClassName("post");
           const remove = document.createElement("button");
+          const modify = document.createElement("button");
+          const buttonDiv = document.createElement("div");
 
+          
+          buttonDiv.className = "divButton"
           post[0].appendChild(login);
           post[0].appendChild(image);
           post[0].appendChild(divLike);
@@ -39,15 +42,21 @@ function DisplayOnePost()
           post[0].appendChild(textPost);
           remove.innerHTML = "delete"
           remove.className = "items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800"
-          post[0].appendChild(remove)
+          modify.className = "items-center modify px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800"
+          // post[0].appendChild(remove)
           post[0].dataset.id = id;
+          modify.innerHTML = "modify";
+          // post[0].appendChild(modify)
+          post[0].appendChild(buttonDiv);
+
+          buttonDiv.appendChild(remove);
+          buttonDiv.appendChild(modify);
 
           login.innerHTML = data.post.login;
           image.src = data.post.imageUrl;
-          like.innerHTML = "👍"
-          disLike.innerHTML = "👎"
-          textPost.innerHTML = data.post.post_text
-          console.log(data.post);
+          like.innerHTML = "👍";
+          disLike.innerHTML = "👎";
+          textPost.innerHTML = data.post.post_text;
           
           return;
         });
@@ -61,8 +70,6 @@ function DisplayOnePost()
       const id = {}
       id.post_id = post[0].dataset.id
       id.image = post[0].childNodes[1].src;
-      console.log(post[0].childNodes[1].src);
-      console.log(id);
       deleteButton[0].addEventListener("click", () => 
       {
         try {
@@ -85,12 +92,33 @@ function DisplayOnePost()
         } catch (error) {
           console.log(error);
         }
-        console.log("click");
       })
       console.log(post[0].dataset.id);
 
     }
     setTimeout(() => deletePost(), 1000)
+    function modifyPost() 
+    {
+      const post = document.getElementsByClassName("post");
+      // console.log(post[0].childNodes[3]);
+      const modify = document.getElementsByClassName("modify");
+      modify[0].onclick = () => 
+      {
+        var text = document.createElement("textarea")
+        const post = document.getElementsByClassName("post");
+        const p = document.getElementsByTagName("p");
+        const applyModif = document.createElement("button")
+
+        applyModif.innerHTML = "apply modification";
+        applyModif.className = "items-center applyModif px-5 py-2.5 text-sm text-black font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800";
+        console.log(p[0].textContent);
+        text.value = p[0].textContent;
+        // p[0].remove();
+        post[0].appendChild(text);
+        post[0].appendChild(applyModif)
+      }
+    }
+    setTimeout(() => modifyPost(), 2000)
   return(<div>
     <Header/>
     <h1>post</h1>

@@ -3,8 +3,6 @@ import Header from "./header"
 import LogoutButton from "./logoutButton";
 import AddImage from "./addImage";
 import "../assets/loader.css"
-// import { useNavigate } from "react-router-dom";
-
 
 function Home() 
 {
@@ -120,7 +118,7 @@ function Home()
     
     function getPost()
     {   
-        fetch("http://localhost:8080/post", 
+        fetch("http://localhost:8080/post",
         {
             method: "GET",
             mode: "cors",
@@ -201,7 +199,7 @@ function Home()
                 <form name="form" onSubmit={(event) => createPost(event)}>
                     <div className="mb-4 w-full parent bg-gray-50 rounded-lg border border-gray-200">
                         <div className="py-2 px-4 bg-white rounded-b-lg text">
-                            <textarea id="editor" rows="8" name="text" className="block px-0 w-full text-sm text-gray-800 bg-white border-0  focus:ring-0 " placeholder="ecrire un post"></textarea>
+                            <textarea id="editor" rows="8" maxLength={240} name="text" className="block px-0 w-full text-sm text-gray-800 bg-white border-0  focus:ring-0 " placeholder="ecrire un post"></textarea>
                         </div>
                     </div>
                     <div className="notif"></div>
