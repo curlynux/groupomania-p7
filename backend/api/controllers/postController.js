@@ -63,3 +63,9 @@ exports.deletePost = (req, res) =>
         });
     });
 }
+
+exports.modifyPost = (req, res) => 
+{
+    console.log(req.body);
+    console.log("test put request");
+}

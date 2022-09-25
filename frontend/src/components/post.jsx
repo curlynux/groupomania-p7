@@ -93,30 +93,93 @@ function DisplayOnePost()
           console.log(error);
         }
       })
-      console.log(post[0].dataset.id);
-
     }
     setTimeout(() => deletePost(), 1000)
     function modifyPost() 
     {
       const post = document.getElementsByClassName("post");
+      const applyModif = document.getElementsByClassName("applyModif");
       // console.log(post[0].childNodes[3]);
+      const p = document.getElementsByTagName("p");
+      var text = document.createElement("textarea")
       const modify = document.getElementsByClassName("modify");
       modify[0].onclick = () => 
       {
-        var text = document.createElement("textarea")
         const post = document.getElementsByClassName("post");
-        const p = document.getElementsByTagName("p");
         const applyModif = document.createElement("button")
 
         applyModif.innerHTML = "apply modification";
-        applyModif.className = "items-center applyModif px-5 py-2.5 text-sm text-black font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800";
+        applyModif.className = "items-center applyModif px-5 py-2.5 text-sm text-black font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-pink-300";
         console.log(p[0].textContent);
         text.value = p[0].textContent;
         // p[0].remove();
         post[0].appendChild(text);
         post[0].appendChild(applyModif)
+
+        console.log(applyModif);
+        applyModif.onclick = () => 
+        {
+          const post = document.getElementsByClassName("post");
+  
+          console.log("test");
+          const id = {}
+          id.post_id = post[0].dataset.id
+          console.log(id);
+          const sendData = {}
+          fetch(`http://localhost:8080/post/${id.post_id}`, 
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+              "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
+            }
+          }).then(res => res.json().then(data => 
+          {
+            const textModif = document.getElementsByTagName("textarea");
+            textModif[0].setAttribute("id", "textModified");
+            console.log(data.post);
+            console.log(textModif[0].value);
+  
+            sendData.login = data.post.login;
+            sendData.imageUrl = data.post.imageUrl;
+            sendData.post_text = textModif[0].value;
+            sendData.like = data.post.like;
+            sendData.disLike = data.post.disLike;
+  
+            fetch(`http://localhost:8080/post/${id.post_id}`, 
+            {
+              method: "PUT",
+              mode: "cors",
+              headers: {
+                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+                "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
+              },
+              body: sendData
+            }).then(res => console.log(res))
+          }))
+          setTimeout(() => console.log(sendData), 1000)
+        }
       }
+      
+      // window.onload = () => 
+      // {
+        console.log("test");
+        
+      // }
+      
+        // fetch(`http://localhost:8080/post/${id.post_id}`, 
+        // {
+        //   method: "POST",
+        //   mode: "cors",
+        //   headers: {
+        //     Accept: 'application/json',
+        //     'Content-Type': 'application/json',
+        //     "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        //     "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
+        // },
+        // body:
+        // });
     }
     setTimeout(() => modifyPost(), 2000)
   return(<div>
