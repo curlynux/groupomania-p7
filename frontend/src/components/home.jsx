@@ -86,7 +86,8 @@ function Home()
         fileData.append("post_text", textValue)
         fileData.append("like", 0)
         fileData.append("disLike", 0)
-        
+        fileData.append("userId", localStorage.getItem("userId"))
+        console.log("FILE DATA", fileData);
         try
         {
             fetch("http://localhost:8080/post", 

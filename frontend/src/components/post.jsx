@@ -53,10 +53,12 @@ function DisplayOnePost()
           buttonDiv.appendChild(modify);
 
           login.innerHTML = data.post.login;
+          login.className = "login"
           image.src = data.post.imageUrl;
           like.innerHTML = "👍";
           disLike.innerHTML = "👎";
           textPost.innerHTML = data.post.post_text;
+          like.className = "like";
           
           return;
         });
@@ -69,7 +71,9 @@ function DisplayOnePost()
       const deleteButton = document.getElementsByClassName("publish");
       const id = {}
       id.post_id = post[0].dataset.id
+      id.userId = localStorage.getItem("userId")
       id.image = post[0].childNodes[1].src;
+      console.log(id);
       deleteButton[0].addEventListener("click", () => 
       {
         try {
@@ -97,12 +101,13 @@ function DisplayOnePost()
     setTimeout(() => deletePost(), 1000)
     function modifyPost() 
     {
-      const post = document.getElementsByClassName("post");
-      const applyModif = document.getElementsByClassName("applyModif");
-      // console.log(post[0].childNodes[3]);
       const p = document.getElementsByTagName("p");
       var text = document.createElement("textarea")
       const modify = document.getElementsByClassName("modify");
+      const applyModif = document.createElement("button")
+      applyModif.innerHTML = "apply modification";
+      applyModif.className = "items-center applyModif px-5 py-2.5 text-sm text-black font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-pink-300";
+      
       modify[0].onclick = () => 
       {
         const post = document.getElementsByClassName("post");
@@ -119,67 +124,21 @@ function DisplayOnePost()
         console.log(applyModif);
         applyModif.onclick = () => 
         {
-          const post = document.getElementsByClassName("post");
-  
           console.log("test");
-          const id = {}
-          id.post_id = post[0].dataset.id
-          console.log(id);
-          const sendData = {}
-          fetch(`http://localhost:8080/post/${id.post_id}`, 
+          fetch(`http://localhost:8080/post/${window.location.href.split("/")[4]}`, 
           {
-            method: "GET",
+            method: "PUT",
             mode: "cors",
             headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
               "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
               "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
-            }
-          }).then(res => res.json().then(data => 
-          {
-            const textModif = document.getElementsByTagName("textarea");
-            textModif[0].setAttribute("id", "textModified");
-            console.log(data.post);
-            console.log(textModif[0].value);
-  
-            sendData.login = data.post.login;
-            sendData.imageUrl = data.post.imageUrl;
-            sendData.post_text = textModif[0].value;
-            sendData.like = data.post.like;
-            sendData.disLike = data.post.disLike;
-  
-            fetch(`http://localhost:8080/post/${id.post_id}`, 
-            {
-              method: "PUT",
-              mode: "cors",
-              headers: {
-                "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-                "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
-              },
-              body: sendData
-            }).then(res => console.log(res))
-          }))
-          setTimeout(() => console.log(sendData), 1000)
-        }
+          },
+          body: JSON.stringify({message: "it works !"})
+          }).then((res) => res.json().then(data => console.log(data)))
+        };
       }
-      
-      // window.onload = () => 
-      // {
-        console.log("test");
-        
-      // }
-      
-        // fetch(`http://localhost:8080/post/${id.post_id}`, 
-        // {
-        //   method: "POST",
-        //   mode: "cors",
-        //   headers: {
-        //     Accept: 'application/json',
-        //     'Content-Type': 'application/json',
-        //     "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        //     "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
-        // },
-        // body:
-        // });
     }
     setTimeout(() => modifyPost(), 2000)
   return(<div>

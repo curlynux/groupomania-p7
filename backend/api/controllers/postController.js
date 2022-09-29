@@ -14,10 +14,10 @@ exports.createPost = (req, res) =>
     
         const post = new Post({post: {
             login: req.body.login,
+            userId: req.auth.userId,
             imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
             post_text: req.body.post_text,
             like: req.body.like,
-            disLike: req.body.disLike
         }})
         post.save().then(() => res.status(201).json({message: "post created"}))
 }
@@ -34,22 +34,18 @@ exports.getOnePost = (req, res) =>
     console.log(req.params);
     Post.findOne({_id: req.params.id})
     .then(post => 
-        {
-            console.log(post)
-            return res.status(200).json(post)
-        })
-    console.log("get one post");
+    {
+        return res.status(200).json(post)
+    })
 }
 
 exports.deletePost = (req, res) =>
 {
-    console.log("voici le body de l'id");
-    console.log(req.headers["content-type"]);
     console.log(req.body);
+    console.log("userID: ", req.body.userId);
     console.log(req.body.image);
     console.log(req.params);
     var filename = req.body.image.split("/")[4]
-    console.log("FILE ", filename);
     
     // //add fs.unlink to delete image
     fs.unlink(`images/${filename}`, () => 
@@ -59,13 +55,41 @@ exports.deletePost = (req, res) =>
         console.log(filename);
         console.log("post deleted !");
         return res.status(200).json({message: "post supprimé !"})
-        console.log(`post deleted ! id: ${req.params.id}`);
         });
     });
 }
 
 exports.modifyPost = (req, res) => 
 {
-    console.log(req.body);
-    console.log("test put request");
+    console.log(req.auth);
+    Post.findOne({ _id: req.params.id })
+    .then((post) => {
+
+        if (post.post.userId != req.auth.userId) {
+          console.log("user not granted !");
+        res.status(403).json({ error: "Unauthorized request" });
+      } else if (post.post.userId === req.auth.userId) {
+        const filename = post.post.imageUrl.split("/images/")[1];
+        console.log(post);
+        if(req.file)
+        {
+          fs.unlink(`images/${filename}`, () => {
+            const postObject = req.file
+              ? {post: {
+                  ...JSON.parse(req.body.post),
+                  imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+                }}
+              : { post:{...req.body}};
+            Post.updateOne({ _id: req.params.id },
+              { post: {...postObject}, _id: req.params.id }
+            )
+              .then(() => res.status(200).json({ message: "post modifiée." }))
+              .catch((error) => res.status(400).json({ error }));
+          });
+        }
+        Post.updateOne({ _id: req.params.id }, {post:  {...req.body}});
+        
+      }
+    })
+    .catch((error) => res.status(400).json({ error }));
 }
