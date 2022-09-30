@@ -65,10 +65,10 @@ exports.modifyPost = (req, res) =>
     Post.findOne({ _id: req.params.id })
     .then((post) => {
 
-        if (post.post.userId != req.auth.userId) {
-          console.log("user not granted !");
-        res.status(403).json({ error: "Unauthorized request" });
-      } else if (post.post.userId === req.auth.userId) {
+      //   if (post.post.userId != req.auth.userId) {
+      //     console.log("user not granted !");
+      //   res.status(403).json({ error: "Unauthorized request" });
+      // } else if (post.post.userId === req.auth.userId) {
         const filename = post.post.imageUrl.split("/images/")[1];
         console.log(post);
         if(req.file)
@@ -80,6 +80,7 @@ exports.modifyPost = (req, res) =>
                   imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
                 }}
               : { post:{...req.body}};
+
             Post.updateOne({ _id: req.params.id },
               { post: {...postObject}, _id: req.params.id }
             )
@@ -87,9 +88,15 @@ exports.modifyPost = (req, res) =>
               .catch((error) => res.status(400).json({ error }));
           });
         }
-        Post.updateOne({ _id: req.params.id }, {post:  {...req.body}});
-        
-      }
+
+        console.log('req.body')
+        console.log(req.body)
+
+
+        Post.updateOne({ _id: req.params.id }, {post:  {...req.body}})
+        .then(() => res.status(200).json({ message: "post modifiée." }))
+        .catch((error) => res.status(400).json({ error }));
+      
     })
     .catch((error) => res.status(400).json({ error }));
 }
