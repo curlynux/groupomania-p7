@@ -2,10 +2,12 @@ import Header from "./header"
 import { useParams } from 'react-router-dom';
 import "../assets/post.css";
 import { useNavigate } from "react-router-dom";
+import AddImage from "./addImage"
 
 function DisplayOnePost()
 {
   let { id } = useParams();
+  const navigate = useNavigate();
   
   fetch(`http://localhost:8080/post/${id}`, 
   {
@@ -29,7 +31,6 @@ function DisplayOnePost()
           return;
         });
     });
-    const navigate = useNavigate();
 
     function deletePost() 
     {
@@ -66,20 +67,24 @@ function DisplayOnePost()
     }
     setTimeout(() => deletePost(), 1000)
     
-    function modifyPost() 
+    function modifyPost(event) 
     {
+      
       const p = document.getElementsByTagName("p");
       const modify = document.getElementsByClassName("modify");
       const applyModif = document.createElement("button")
       const text = document.createElement("textarea");
-    text.id = "modified_text"
-console.log(text);
+      
+      text.id = "modified_text"
+      console.log(text);
       applyModif.innerHTML = "apply modification";
       applyModif.className = "items-center applyModif px-5 py-2.5 text-sm text-black font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-pink-300";
       modify[0].onclick = () => 
       {
+        
         const post = document.getElementsByClassName("post");
         const applyModif = document.createElement("button")
+        const inputFile = document.getElementsByTagName("input")[0]
 
         applyModif.innerHTML = "apply modification";
         applyModif.className = "items-center applyModif px-5 py-2.5 text-sm text-black font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-pink-300";
@@ -89,23 +94,27 @@ console.log(text);
         // p[0].remove();
         post[0].appendChild(text);
         post[0].appendChild(applyModif)
-        
-        var i = 0;
-        var modified_text = document.getElementById("modified_text").value
-        
-        console.log(modified_text);
-        sessionStorage.setItem("modified_text", document.getElementById("modified_text").value)
+        inputFile.style.display = "block";
+        inputFile.addEventListener("change", (event) => 
+        {
+          console.log(event.target.files[0])
+        });
         const sendData = {
           login: document.getElementsByClassName("login")[0].textContent,
           userId: localStorage.getItem("userId"),
-          imageUrl: "https://media-mcetv.ouest-france.fr/wp-content/uploads/2022/04/one-piece-odyssey-le-jeu-se-devoile-en-images-avec-luffy-et-sa-bande-1200-min.jpg",
-          post_text: sessionStorage.getItem("modified_text"),
+          imageUrl: "https://i.pinimg.com/736x/89/74/e2/8974e2d82fc5931d840604aa626cffba.jpg",
+          post_text: "text",
           like: 0
         }
         console.log(sendData);
-        setTimeout(() => {applyModif.onclick = () => 
+
+        setTimeout(() => {
+        applyModif.onclick = () => 
         {
-          console.log("test");
+          
+          var text_value = document.getElementById("modified_text").value;
+          sendData.post_text = text_value;
+          console.log("POST_TEXT", sendData.post_text);
           fetch(`http://localhost:8080/post/${window.location.href.split("/")[4]}`, 
           {
             method: "PUT",
@@ -120,11 +129,11 @@ console.log(text);
           }).then(res => console.log(res))
           console.log(sendData);
           console.log("modification sent !");
-          console.log(document.getElementById("modified_text").value);
-        }}, 2000);
+          window.location.reload()
+        }}, 1000);
       }
     }
-    setTimeout(() => modifyPost(), 2000)
+    setTimeout(() => modifyPost(), 1000)
   return(<div>
     <Header/>
     <h1>post</h1>
@@ -139,7 +148,9 @@ console.log(text);
         <button className="items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800">remove</button>
         <button className="items-center modify px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800">modify</button>
       </div>
+      <AddImage/>
     </div>
+    
   </div>)
 }
 
