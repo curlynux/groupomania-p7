@@ -12,15 +12,15 @@ function AddImage()
     }
     
     return(
-        <div>
+        <div style={{display: "block"}}>
             {selectedImage && (
             <div>
-                <img alt="image" id="preview" src={URL.createObjectURL(selectedImage)} />
+                <img alt="image" style={{display: "block"}} id="preview" src={URL.createObjectURL(selectedImage)} />
                 <br />
-                <button id="removePhoto" onClick={() => setSelectedImage(null)} >Remove</button>
+                <button id="removePhoto"style={{display: "block"}} onClick={() => setSelectedImage(null)} >Remove</button>
             </div>)}
             <br/>
-            <input type="file" id="sendImage" name="UploadImage" onChange={displayFile}/>
+            <input type="file" style={{display: "block"}}id="sendImage" name="UploadImage" onChange={displayFile}/>
         </div>
     )
 }

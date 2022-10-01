@@ -62,13 +62,12 @@ exports.deletePost = (req, res) =>
 exports.modifyPost = (req, res) => 
 {
     console.log(req.auth);
+    console.log(req.file);
     Post.findOne({ _id: req.params.id })
     .then((post) => {
 
-      //   if (post.post.userId != req.auth.userId) {
-      //     console.log("user not granted !");
-      //   res.status(403).json({ error: "Unauthorized request" });
-      // } else if (post.post.userId === req.auth.userId) {
+        if(req.auth.userId === post.post.userId)
+        {
         const filename = post.post.imageUrl.split("/images/")[1];
         console.log(post);
         if(req.file)
@@ -88,7 +87,7 @@ exports.modifyPost = (req, res) =>
               .catch((error) => res.status(400).json({ error }));
           });
         }
-
+      }
         console.log('req.body')
         console.log(req.body)
 
@@ -100,3 +99,10 @@ exports.modifyPost = (req, res) =>
     })
     .catch((error) => res.status(400).json({ error }));
 }
+
+// exports.media = (req, res) =>
+// {
+//   console.log(req.file);
+//   console.log("this is media");
+//   return res.status(201).json(res);
+// }

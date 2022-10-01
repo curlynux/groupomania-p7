@@ -95,26 +95,52 @@ function DisplayOnePost()
         post[0].appendChild(text);
         post[0].appendChild(applyModif)
         inputFile.style.display = "block";
-        inputFile.addEventListener("change", (event) => 
-        {
-          console.log(event.target.files[0])
-        });
-        const sendData = {
-          login: document.getElementsByClassName("login")[0].textContent,
-          userId: localStorage.getItem("userId"),
-          imageUrl: "https://i.pinimg.com/736x/89/74/e2/8974e2d82fc5931d840604aa626cffba.jpg",
-          post_text: "text",
-          like: 0
-        }
-        console.log(sendData);
+        // inputFile.addEventListener("change", (event) => 
+        // {
+        //   console.log(event.target.files[0]);
+        //   const fileForm = new FormData();
+        //   fileForm.append("file", event.target.files[0])
+        //   fetch(`http://localhost:8080/post/${window.location.href.split("/")[4]}`, 
+        //   {
+        //     method: "PUT",
+        //     mode: "cors",
+        //     headers: {
+        //       "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        //       "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
+        //     },
+        //     body: fileForm
+        //   }).then(res => 
+        //   {
+        //     console.log("file sent !");
+        //     console.log(res)
+        //   });
+        // });
+        
+        
 
-        setTimeout(() => {
-        applyModif.onclick = () => 
+        setTimeout((event) => {
+          // event.preventDefault()
+        applyModif.onclick = (event) => 
         {
-          
+          event.preventDefault()
           var text_value = document.getElementById("modified_text").value;
+          const sendData = {
+            login: document.getElementsByClassName("login")[0].textContent,
+            userId: localStorage.getItem("userId"),
+            imageUrl: document.getElementById("image").src,
+            post_text: document.getElementById("modified_text").value,
+            like: 0
+          }
+          inputFile.addEventListener("change", () => 
+          {
+            event.preventDefault()
+            console.log(event.target.files[0])
+            sendData.file = event.target.files[0]
+            console.log(sendData);
+          } ) 
           sendData.post_text = text_value;
           console.log("POST_TEXT", sendData.post_text);
+
           fetch(`http://localhost:8080/post/${window.location.href.split("/")[4]}`, 
           {
             method: "PUT",
@@ -130,7 +156,7 @@ function DisplayOnePost()
           console.log(sendData);
           console.log("modification sent !");
           window.location.reload()
-        }}, 1000);
+        }}, 2000);
       }
     }
     setTimeout(() => modifyPost(), 1000)
