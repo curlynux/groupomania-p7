@@ -1,34 +1,23 @@
-div.post img
-{
-    margin: 0;
-    width: 400px;
-    margin: 5px;
-    border-radius: 10px;
+div.post img {
+  margin: 0;
+  width: 400px;
+  margin: 5px;
+  border-radius: 10px;
 }
 
-div.divButton
-{
-    display: flex;
-    justify-content: space-around;
+div.divButton {
+  display: flex;
+  justify-content: space-around;
 }
 
-div p
-{
-    overflow-wrap: break-word;
+div p {
+  overflow-wrap: break-word;
 }
 
-button.modify
-{
-    background-color: #FD2D01;
+button.modify {
+  background-color: #fd2d01;
 }
 
-button.applyModif
-{
-    background-color: #FFD7D7;
-}
-
-input[type=file]
-{
-    display: none;
-    background-color: #FFD7D7;
+button.applyModif {
+  background-color: #ffd7d7;
 }
