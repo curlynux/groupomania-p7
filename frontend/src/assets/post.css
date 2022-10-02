@@ -27,7 +27,8 @@ button.applyModif
     background-color: #FFD7D7;
 }
 
-input 
+input[type=file]
 {
     display: none;
+    background-color: #FFD7D7;
 }

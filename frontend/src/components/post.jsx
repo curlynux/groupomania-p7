@@ -94,6 +94,7 @@ function DisplayOnePost()
         // p[0].remove();
         post[0].appendChild(text);
         post[0].appendChild(applyModif)
+        console.log(post[0]);
         inputFile.style.display = "block";
         // inputFile.addEventListener("change", (event) => 
         // {

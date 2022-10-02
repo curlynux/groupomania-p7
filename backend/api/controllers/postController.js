@@ -48,15 +48,19 @@ exports.deletePost = (req, res) =>
     var filename = req.body.image.split("/")[4]
     
     // //add fs.unlink to delete image
-    fs.unlink(`images/${filename}`, () => 
+    if(req.auth.userId === req.body.userId || 
+      req.auth.userId === "6319fc45f375ce7c71b7b6b8")
     {
-    Post.deleteOne({_id: req.params.id})
-    .then((post) => {
-        console.log(filename);
-        console.log("post deleted !");
-        return res.status(200).json({message: "post supprimé !"})
-        });
-    });
+      fs.unlink(`images/${filename}`, () => 
+      {
+      Post.deleteOne({_id: req.params.id})
+      .then((post) => {
+          console.log(filename);
+          console.log("post deleted !");
+          return res.status(200).json({message: "post supprimé !"})
+          });
+      });
+    }
 }
 
 exports.modifyPost = (req, res) => 
@@ -65,8 +69,10 @@ exports.modifyPost = (req, res) =>
     console.log(req.file);
     Post.findOne({ _id: req.params.id })
     .then((post) => {
-
-        if(req.auth.userId === post.post.userId)
+        console.log("POST USERID", post.post.userId);
+        console.log("USER ID:", req.auth.userId);
+        if(req.auth.userId === post.post.userId || 
+          req.auth.userId === "6319fc45f375ce7c71b7b6b8")
         {
         const filename = post.post.imageUrl.split("/images/")[1];
         console.log(post);
@@ -87,6 +93,10 @@ exports.modifyPost = (req, res) =>
               .catch((error) => res.status(400).json({ error }));
           });
         }
+      }
+      else 
+      {
+        return res.status(403).json({message: "user not granted !"})
       }
         console.log('req.body')
         console.log(req.body)
