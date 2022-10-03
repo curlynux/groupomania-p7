@@ -1,4 +1,4 @@
-# Projet 7 Groupomania OpenClassromms
+# Projet 7 Groupomania OpenClassrooms
 
 ceci est un projet web fullstack de l'ecole en ligne openclassromms
 
