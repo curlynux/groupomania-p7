@@ -41,8 +41,41 @@ function Login() {
     } catch (error) {
       console.log(error);
     }
+
   }
 
+
+        //verifie chaque element du formulaire afin de detecter les éventuels erreurs "chiffres et caractère spéciaux" grâce a des regex
+function formValidation() {
+  
+  var email = document.getElementById("email");
+  var emailErrorMsg = document.getElementById("emailErrorMsg");
+  const regexForName = /(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/;
+  const regexForEmail = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  
+  // vérification du formulaire lors de la validation
+      let isValid = true;
+      if(email)
+      {
+        // if(email.value.length > 0)
+        // {
+          if(email.value.trim().match(regexForEmail)){
+            email.style.border = 'solid 2px #D5FCB4';
+            emailErrorMsg.style.color = '#D5FCB4';
+            emailErrorMsg.innerHTML = "Valide";
+          } 
+        else{
+            isValid=false;
+            emailErrorMsg.innerHTML = "l'email' est incorecte";
+            email.style.border = 'solid 2px red';
+            emailErrorMsg.style.color = '#fbbcbc';
+        }
+        // }
+      }
+return isValid;    
+  }
+
+  formValidation()
   return (
     <div>
       <Header />
@@ -50,18 +83,12 @@ function Login() {
       <div className="flex justify-center">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
-            <label
-              className="block test-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              nom d'utilisateur
+            <label className="block test-gray-700 text-sm font-bold mb-2" htmlFor="username">
+              email
             </label>
-            <input
-              className="shadow block appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="text"
-              placeholder="email"
-            />
+            <input className="shadow block appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email"
+              type="text" placeholder="email"/>
+              <span id="emailErrorMsg"></span>
           </div>
           <div className="mb-6">
             <label

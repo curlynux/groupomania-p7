@@ -8,7 +8,7 @@ function Header() {
   return (
     <div className="flex justify-center h-[100px] bg-[#FD2D01] mb-[100px]">
       <Link to={isAuth() ? "/home" : "/"}>
-        <img src={image} alt="logo" className="w-[100px]" />
+        <img src={image} alt="logo" className="w-[220px] logo" />
       </Link>
     </div>
   );

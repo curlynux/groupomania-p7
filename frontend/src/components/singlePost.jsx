@@ -8,8 +8,8 @@ export function Post({ _id, post, handleLike }) {
           <button className="likeButton" onClick={handleLike}>
             👍
           </button>
-          <span className="likeText"></span>
-          <span className="disLikeText"></span>
+          <span className="likeText">{post.like}</span>
+          
         </div>
         <p className="text_post">{post.post_text}</p>
       </div>

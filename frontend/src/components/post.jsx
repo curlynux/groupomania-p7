@@ -20,7 +20,7 @@ const Post = ({
   handleUpload,
 }) => (
   <div className="post" data-id={_id}>
-    <span className="login">spartacus</span>
+    <span className="login">{post.login}</span>
     <img src={post.imageUrl} alt={post.username} id="image" />
     <div>
       <button className="like" onClick={handleLike}>
@@ -160,26 +160,7 @@ function DisplayOnePost() {
       post[0].appendChild(applyModif);
       console.log(post[0]);
       inputFile.style.display = "block";
-      // inputFile.addEventListener("change", (event) =>
-      // {
-      //   console.log(event.target.files[0]);
-      //   const fileForm = new FormData();
-      //   fileForm.append("file", event.target.files[0])
-      //   fetch(`http://localhost:8080/post/${window.location.href.split("/")[4]}`,
-      //   {
-      //     method: "PUT",
-      //     mode: "cors",
-      //     headers: {
-      //       "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      //       "X-Authenticated-Userid": `${JSON.parse(localStorage.getItem("userId"))}`,
-      //     },
-      //     body: fileForm
-      //   }).then(res =>
-      //   {
-      //     console.log("file sent !");
-      //     console.log(res)
-      //   });
-      // });
+      
 
       setTimeout((event) => {
         // event.preventDefault()
@@ -227,7 +208,6 @@ function DisplayOnePost() {
       }, 2000);
     };
   }
-  // setTimeout(() => modifyPost(), 1000);
 
   const handleLike = async () => {
     try {
