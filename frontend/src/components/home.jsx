@@ -14,13 +14,17 @@ function Home() {
   const [text, setText] = useState("");
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
+  var userId = JSON.parse(localStorage.getItem("userId"))
 
   const getPost = async () => {
     try {
       const post = await httpRequest({ path: "/post", method: "GET" });
       console.log({ post });
       setPosts(post);
-    } catch (error) {}
+    } catch (error) {console.log(error)}
+    // if (localStorage.getItem("userId") === JSON.parse("6319fc45f375ce7c71b7b6b8"))
+      // console.log(localStorage.getItem("userId"));
+      if(userId === "6319fc45f375ce7c71b7b6b8") console.log("admin", userId);
   };
 
   function notification() {
@@ -55,40 +59,48 @@ function Home() {
 
   const createPost = async (event) => {
     event.preventDefault();
-
-    const loaderBg = document.createElement("div");
-    const loader = document.createElement("div");
-    const fileData = new FormData();
-
-    loaderBg.className = "bg";
-    loader.className = "loader";
-    document.getElementById("main").appendChild(loaderBg);
-    loaderBg.appendChild(loader);
-
-    if (image) {
-      fileData.append("image", image);
-      fileData.append("imageUrl", JSON.stringify(image.name));
+    
+    if(userId !== "6319fc45f375ce7c71b7b6b8")
+    {
+      const loaderBg = document.createElement("div");
+      const loader = document.createElement("div");
+      const fileData = new FormData();
+  
+      loaderBg.className = "bg";
+      loader.className = "loader";
+      document.getElementById("main").appendChild(loaderBg);
+      loaderBg.appendChild(loader);
+  
+      if (image) {
+        fileData.append("image", image);
+        fileData.append("imageUrl", JSON.stringify(image.name));
+      }
+      if (text.length) fileData.append("post_text", text);
+  
+      fileData.append("login", localStorage.getItem("login"));
+      fileData.append("like", 0);
+      fileData.append("disLike", 0);
+      fileData.append("userId", localStorage.getItem("userId"));
+  
+      try {
+        const { post } = await httpRequest({
+          path: "/post",
+          body: fileData,
+          isFormData: true,
+        });
+        setPosts([...posts, post]);
+        setText("");
+      } catch (error) {
+        console.log(error);
+      } finally {
+        loaderBg.remove();
+        notification();
+      }
     }
-    if (text.length) fileData.append("post_text", text);
-
-    fileData.append("login", localStorage.getItem("login"));
-    fileData.append("like", 0);
-    fileData.append("disLike", 0);
-    fileData.append("userId", localStorage.getItem("userId"));
-
-    try {
-      const { post } = await httpRequest({
-        path: "/post",
-        body: fileData,
-        isFormData: true,
-      });
-      setPosts([...posts, post]);
-      setText("");
-    } catch (error) {
-      console.log(error);
-    } finally {
-      loaderBg.remove();
-      notification();
+    else
+    {
+      alert("user admin cannot post");
+      console.log("user admin cannot post");
     }
   };
 

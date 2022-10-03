@@ -14,10 +14,10 @@ exports.createPost = (req, res) => {
   console.log(req.file);
   const filename = req.file?.filename;
 
-  if(req.auth.userId === "6319fc45f375ce7c71b7b6b8")
-    return res.status(403).json({message: "user admin cannot post"}) 
-  else
-  {
+  // if(req.auth.userId === "6319fc45f375ce7c71b7b6b8")
+  //   return res.status(403).json({message: "user admin cannot post"}) 
+  // else
+  // {
     const post = new Post({
       post: {
         login: req.body.login,
@@ -32,7 +32,7 @@ exports.createPost = (req, res) => {
     post
       .save()
       .then(() => res.status(201).json({ message: "post created", post }));
-  }
+  // }
 };
 
 exports.getPost = (req, res) => {
