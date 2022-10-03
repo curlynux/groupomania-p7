@@ -55,8 +55,8 @@ function formValidation() {
   
   // vérification du formulaire lors de la validation
       let isValid = true;
-      if(email)
-      {
+      // if(email)
+      // {
         // if(email.value.length > 0)
         // {
           if(email.value.trim().match(regexForEmail)){
@@ -71,7 +71,7 @@ function formValidation() {
             emailErrorMsg.style.color = '#fbbcbc';
         }
         // }
-      }
+      // }
 return isValid;    
   }
 
