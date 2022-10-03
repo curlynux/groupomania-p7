@@ -37,6 +37,33 @@ function App() {
     }
   }
 
+
+  function formValidation() {
+  
+    var email = document.getElementById("email");
+    var emailErrorMsg = document.getElementById("emailErrorMsg");
+    const regexForName = /(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/;
+    const regexForEmail = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    
+    // vérification du formulaire lors de la validation
+        let isValid = true;
+        
+            if(email.value.trim().match(regexForEmail)){
+              email.style.border = 'solid 2px #D5FCB4';
+              emailErrorMsg.style.color = '#D5FCB4';
+              emailErrorMsg.innerHTML = "Valide";
+            } 
+          else{
+              isValid=false;
+              emailErrorMsg.innerHTML = "l'email' est incorecte";
+              email.style.border = 'solid 2px red';
+              emailErrorMsg.style.color = '#fbbcbc';
+          }
+  return isValid;    
+    }
+  
+    // formValidation()
+
   return (
     <div>
       <Header />

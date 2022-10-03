@@ -75,7 +75,7 @@ function formValidation() {
 return isValid;    
   }
 
-  formValidation()
+  // formValidation()
   return (
     <div>
       <Header />
