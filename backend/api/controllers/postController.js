@@ -78,6 +78,7 @@ exports.modifyPost = async (req, res) => {
 
   const filename = post.imageUrl?.split("/images/")[1];
   var hasNewImage;
+  console.log("HEHEHEEH", req);
   if(req.body.imageUrl) hasNewImage = req.body.imageUrl;
   else hasNewImage = post.imageUrl;
 
@@ -100,7 +101,7 @@ exports.modifyPost = async (req, res) => {
     );
   } else res.status(200).json({ message: "post modifié !" });
 
-  return;
+  
   console.log(req.auth);
   console.log(req.file);
 

@@ -65,17 +65,13 @@ function Home() {
       const loader = document.createElement("div");
       const fileData = new FormData();
       // const fileImg = event.target.files[0]
-      const inputeFile = document.getElementById("url")
+      // const inputeFile = document.getElementById("url")
       loaderBg.className = "bg";
       loader.className = "loader";
       document.getElementById("main").appendChild(loaderBg);
       loaderBg.appendChild(loader);
-      
-      inputeFile.onchange = (event) => 
-      {
-        console.log(event.target.files[0]);
-      }
-
+      console.log("image", image);
+      console.log("imageUrl", image.name);
       if (image) {
         fileData.append("image", image);
         fileData.append("imageUrl", JSON.stringify(image.name));

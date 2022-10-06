@@ -12,6 +12,7 @@ const Post = ({
   text,
   post,
   setText,
+  setImage,
   handleLike,
   showModify,
   handleRemove,
@@ -44,7 +45,7 @@ const Post = ({
     </div>
     {showModify && (
       <>
-        <AddImage />
+        <AddImage setImage={setImage}/>
         <textarea
           defaultValue={text}
           onChange={(e) => setText(e.target.value)}
@@ -131,15 +132,22 @@ function DisplayOnePost() {
       fileData.append("imageUrl", image.name);
     }
     if (text.length) fileData.append("post_text", text);
+    
+    // document.getElementById("imageToSend").onchange = (event) =>
+    // {
+    //   const file = event.target.files[0]
+    // }
 
     try {
       const res = await httpRequest({
         path: `/post/${id}`,
-        body: { post_text: text, imageUrl: imageUrl.length <5 ? oldImageUrl : imageUrl},
+        // body: { post_text: text, image, imageUrl: imageUrl.length <5 ? oldImageUrl : imageUrl},
+        body: fileData, 
         method: "PUT",
-        // isFormData: true,
+        isFormData: true,
       });
-      console.log(res);
+      
+      console.log("HEHE",res);
     } catch (error) {
       console.log(error);
     } finally {
@@ -246,6 +254,7 @@ function DisplayOnePost() {
           text={text}
           showModify={showModify}
           setText={setText}
+          setImage={setImage}
           handleLike={handleLike}
           handleUpload={setImage}
           handleModify={handleModify}
