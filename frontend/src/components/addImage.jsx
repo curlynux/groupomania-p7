@@ -17,6 +17,13 @@ function AddImage({ setImage }) {
     setSelectedImage(null);
     setImageLocal(null);
   };
+setTimeout(() => 
+{
+  if(window.location.href === "http://localhost:3000/home")
+    document.getElementById("allInput")
+  if(window.location.href != "http://localhost:3000/home")
+    document.getElementById("imageToSend").remove()
+}, 200)
 
   return (
     <div>
@@ -34,8 +41,10 @@ function AddImage({ setImage }) {
         </div>
       )}
       <br />
+      <div id="allInput">
       <input type="text" id="url" placeholder="image url" style={{border: "2px solid black"}}/>
       <input type="file" id="imageToSend" name="UploadImage" onChange={displayFile} />
+      </div>
     </div>
   );
 }

@@ -139,10 +139,11 @@ function DisplayOnePost() {
     // }
 
     try {
+      console.log(image);
       const res = await httpRequest({
         path: `/post/${id}`,
-        // body: { post_text: text, image, imageUrl: imageUrl.length <5 ? oldImageUrl : imageUrl},
-        body: fileData, 
+        body: { post_text: text, image, imageUrl: imageUrl.length <5 ? oldImageUrl : imageUrl},
+        // body: fileData, 
         method: "PUT",
         isFormData: true,
       });
