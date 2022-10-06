@@ -11,7 +11,7 @@ const createImgUrl = (req) =>
 exports.createPost = (req, res) => {
   console.log(req.body);
   console.log(req.file?.filename);
-  console.log(req.file);
+  console.log("FILE", req.file);
   const filename = req.file?.filename;
 
   // if(req.auth.userId === "6319fc45f375ce7c71b7b6b8")

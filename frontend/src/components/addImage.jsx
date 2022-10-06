@@ -34,7 +34,7 @@ function AddImage() {
       )}
       <br />
       <input type="text" id="url" placeholder="image url" style={{border: "2px solid black"}}/>
-      {/* <input type="file" name="UploadImage" onChange={displayFile} /> */}
+      <input type="file" name="UploadImage" onChange={displayFile} />
     </div>
   );
 }
