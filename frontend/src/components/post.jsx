@@ -80,7 +80,7 @@ function DisplayOnePost() {
       }
       try {
         const post = await httpRequest({ path: `/post/${id}`, method: "GET" });
-        console.log({ post });
+        console.log(post);
         setText(post.post.post_text);
         setPost(post);
       } catch (error) {}
@@ -99,7 +99,20 @@ function DisplayOnePost() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }
+
+//   const handleUpload = () => 
+// {
+//   const input = document.getElementsByTagName("input")
+//   input[0].addEventListener("change", (event) => 
+//   {
+//     const file = event.target.files[0];
+//     console.log(file);
+//     const res = httpRequest({path: `/post/${id}`, method: "PUT", body: file})
+//     res.then(response => console.log(response))
+//   });
+
+// }
   const handleModify = async () => {
     const loaderBg = document.createElement("div");
     const loader = document.createElement("div");
@@ -219,6 +232,7 @@ function DisplayOnePost() {
     }
   };
 
+
   return (
     <div id="main">
       <Header />
@@ -234,6 +248,7 @@ function DisplayOnePost() {
           handleModify={handleModify}
           handleRemove={deletePost}
           toggleShowModify={toggleShowModify}
+          
         />
       )}
     </div>
