@@ -7,7 +7,7 @@ function AddImage() {
 
   const displayFile = (event) => {
     const file = event.target.files[0];
-
+    console.log(event.target.files[0]);
     setSelectedImage(file);
     setImage(file);
   };

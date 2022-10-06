@@ -64,12 +64,18 @@ function Home() {
       const loaderBg = document.createElement("div");
       const loader = document.createElement("div");
       const fileData = new FormData();
-  
+      // const fileImg = event.target.files[0]
+      const inputeFile = document.getElementById("url")
       loaderBg.className = "bg";
       loader.className = "loader";
       document.getElementById("main").appendChild(loaderBg);
       loaderBg.appendChild(loader);
-  
+      
+      inputeFile.onchange = (event) => 
+      {
+        console.log(event.target.files[0]);
+      }
+
       if (image) {
         fileData.append("image", image);
         fileData.append("imageUrl", JSON.stringify(image.name));
@@ -81,6 +87,7 @@ function Home() {
       fileData.append("userId", localStorage.getItem("userId"));
   
       try {
+
         const { post } = await httpRequest({
           path: "/post",
           body: fileData,
