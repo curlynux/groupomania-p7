@@ -67,6 +67,7 @@ exports.deletePost = async (req, res) => {
 };
 
 exports.modifyPost = async (req, res) => {
+  console.log(req.body);
   const authUserId = req.auth.userId;
   const _id = req.params.id;
   const { post } = await Post.findOne({ _id });
@@ -76,7 +77,10 @@ exports.modifyPost = async (req, res) => {
     return res.status(403).json({ message: "user not granted !" });
 
   const filename = post.imageUrl?.split("/images/")[1];
-  const hasNewImage = req.file?.filename;
+  var hasNewImage;
+  if(req.body.imageUrl) hasNewImage = req.body.imageUrl;
+  else hasNewImage = post.imageUrl;
+
 
   await Post.updateOne(
     { _id },
@@ -84,7 +88,7 @@ exports.modifyPost = async (req, res) => {
       post: {
         ...post,
         ...req.body,
-        imageUrl: hasNewImage ? createImgUrl(req) : post.imageUrl,
+        imageUrl: req.body.imageUrl ? req.body.imageUrl : post.imageUrl
       },
       _id,
     }

@@ -80,7 +80,7 @@ function DisplayOnePost() {
       }
       try {
         const post = await httpRequest({ path: `/post/${id}`, method: "GET" });
-        console.log({ post });
+        console.log(post);
         setText(post.post.post_text);
         setPost(post);
       } catch (error) {}
@@ -104,7 +104,8 @@ function DisplayOnePost() {
     const loaderBg = document.createElement("div");
     const loader = document.createElement("div");
     const fileData = new FormData();
-
+    const imageUrl = document.getElementById("url").value
+    const oldImageUrl = document.getElementById("image").src;
     // loader
     loaderBg.className = "bg";
     loader.className = "loader";
@@ -121,7 +122,7 @@ function DisplayOnePost() {
     try {
       const res = await httpRequest({
         path: `/post/${id}`,
-        body: { post_text: text },
+        body: { post_text: text, imageUrl: imageUrl.length <5 ? oldImageUrl : imageUrl},
         method: "PUT",
         // isFormData: true,
       });
@@ -132,6 +133,9 @@ function DisplayOnePost() {
       loaderBg.remove();
       // notification();
     }
+
+    // fetch(`http://localhost:8080/post/${id}`, {})
+
   };
   function modifyPost(event) {
     const p = document.getElementsByTagName("p");
@@ -162,8 +166,7 @@ function DisplayOnePost() {
       inputFile.style.display = "block";
       
 
-      setTimeout((event) => {
-        // event.preventDefault()
+      setTimeout(() => {
         applyModif.onclick = (event) => {
           event.preventDefault();
           var text_value = document.getElementById("modified_text").value;

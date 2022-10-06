@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-function AddImage({ setImage }) {
+function AddImage() {
   const [selectedImage, setSelectedImage] = useState(null);
-
+  const [image, setImage] = useState();
   const displayFile = (event) => {
     const file = event.target.files[0];
 
@@ -31,7 +31,8 @@ function AddImage({ setImage }) {
         </div>
       )}
       <br />
-      <input type="file" name="UploadImage" onChange={displayFile} />
+      <input type="text" id="url" placeholder="image url" style={{border: "2px solid black"}}/>
+      {/* <input type="file" name="UploadImage" onChange={displayFile} /> */}
     </div>
   );
 }

@@ -168,7 +168,7 @@ function Home() {
           <h1>Feed</h1>
           {posts.map((post, key) => (
             <Post key={key} {...post} handleLike={() => handleLike(post._id)} />
-          ))}
+          )).reverse()}
         </div>
       </div>
     </div>
