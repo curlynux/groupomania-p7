@@ -19,11 +19,10 @@ function Home() {
   const getPost = async () => {
     try {
       const post = await httpRequest({ path: "/post", method: "GET" });
-      console.log({ post });
+      console.log(post);
       setPosts(post);
     } catch (error) {console.log(error)}
-    // if (localStorage.getItem("userId") === JSON.parse("6319fc45f375ce7c71b7b6b8"))
-      // console.log(localStorage.getItem("userId"));
+    
       if(userId === "6319fc45f375ce7c71b7b6b8") console.log("admin", userId);
   };
 
@@ -79,7 +78,6 @@ function Home() {
   
       fileData.append("login", localStorage.getItem("login"));
       fileData.append("like", 0);
-      fileData.append("disLike", 0);
       fileData.append("userId", localStorage.getItem("userId"));
   
       try {

@@ -2,7 +2,9 @@ import { useState } from "react";
 
 function AddImage() {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [image, setImage] = useState();
+
+  const [image, setImage] = useState([]);
+
   const displayFile = (event) => {
     const file = event.target.files[0];
 
