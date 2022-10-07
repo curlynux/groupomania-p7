@@ -19,12 +19,23 @@ const Post = ({
   toggleShowModify
 }) => {
 const [imageUrl, setImageUrl] = useState("");
+const [user, setUser] = useState({})
   async function handleUpdate() 
   {
     const res = await httpRequest({path: `/post/${window.location.href.split("/")[4]}`, method: "PUT", body: {imageUrl, post_text: text}})
     
   }
-
+  useEffect(() => 
+  {
+    const res = httpRequest({path: `/user`, method: "GET"})
+    res.then(data => 
+    {
+      setUser(data)
+      console.log(post);
+      console.log(data)
+    });
+    
+  }, [])
   return (
   <div className="post" data-id={_id}>
     <span className="login">{post.login}</span>
@@ -35,20 +46,24 @@ const [imageUrl, setImageUrl] = useState("");
       </button>
     </div>
     <p>{post.post_text}</p>
-    <div className="divButton">
-      <button
-        onClick={handleRemove}
-        className="items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800"
-      >
-        remove
-      </button>
-      <button
-        onClick={toggleShowModify}
-        className="items-center modify px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800"
-      >
-        modify
-      </button>
-    </div>
+    {
+      user?.role === "admin" || user._id === post.userId && (
+        <div className="divButton">
+        <button
+          onClick={handleRemove}
+          className="items-center publish px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800"
+        >
+          remove
+        </button>
+        <button
+          onClick={toggleShowModify}
+          className="items-center modify px-5 py-2.5 text-sm text-white font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-red-800"
+        >
+          modify
+        </button>
+      </div>
+      )
+    }
     {showModify && (
       <>
         {/* <AddImage setImage={setImage}/> */}
