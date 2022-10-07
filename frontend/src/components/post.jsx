@@ -2,10 +2,9 @@ import Header from "./header";
 import { useParams } from "react-router-dom";
 import "../assets/post.css";
 import { useNavigate } from "react-router-dom";
-import AddImage from "./addImage";
+// import AddImage from "./addImage";
 import { httpRequest } from "../utils/httpRequest";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const Post = ({
   _id,
@@ -17,9 +16,15 @@ const Post = ({
   showModify,
   handleRemove,
   handleModify,
-  toggleShowModify,
-  handleUpload,
-}) => (
+  toggleShowModify
+}) => {
+const [imageUrl, setImageUrl] = useState("");
+  async function handleUpdate() 
+  {
+    const res = await httpRequest({path: `/post/${window.location.href.split("/")[4]}`, method: "PUT", body: {imageUrl}})
+  }
+
+  return (
   <div className="post" data-id={_id}>
     <span className="login">{post.login}</span>
     <img src={post.imageUrl} alt={post.username} id="image" />
@@ -45,13 +50,15 @@ const Post = ({
     </div>
     {showModify && (
       <>
-        <AddImage setImage={setImage}/>
+        {/* <AddImage setImage={setImage}/> */}
+        <label htmlFor="imageUrl">image url</label>
+        <input type="text" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)} id="imageUrl" placeholder="image url" style={{border: "2px solid black"}}/>
         <textarea
           defaultValue={text}
           onChange={(e) => setText(e.target.value)}
         />
         <button
-          onClick={handleModify}
+          onClick={handleUpdate}
           className="items-center applyModif px-5 py-2.5 text-sm text-black font-medium text-center rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-pink-300"
         >
           apply modification
@@ -59,7 +66,8 @@ const Post = ({
       </>
     )}
   </div>
-);
+
+)};
 
 function DisplayOnePost() {
   const [image, setImage] = useState([]);
@@ -102,18 +110,7 @@ function DisplayOnePost() {
     }
   }
 
-//   const handleUpload = () => 
-// {
-//   const input = document.getElementsByTagName("input")
-//   input[0].addEventListener("change", (event) => 
-//   {
-//     const file = event.target.files[0];
-//     console.log(file);
-//     const res = httpRequest({path: `/post/${id}`, method: "PUT", body: file})
-//     res.then(response => console.log(response))
-//   });
 
-// }
   const handleModify = async () => {
     const loaderBg = document.createElement("div");
     const loader = document.createElement("div");
@@ -140,15 +137,14 @@ function DisplayOnePost() {
         post_text: textValue,
         imageUrl: imageUrl.length < 5 ? oldImageUrl : imageUrl
       }
-      const res = await httpRequest({
+      await httpRequest({
         path: `/post/${id}`,
         body: JSON.stringify(sendData),
         // body: fileData, 
         method: "PUT",
         isFormData: true,
-      });
+      }).then(res => console.log(res))
       console.log(textValue, imageUrl);
-      console.log("HEHE",res);
     } catch (error) {
       console.log(error);
     } finally {

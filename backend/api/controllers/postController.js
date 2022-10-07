@@ -68,22 +68,26 @@ exports.deletePost = async (req, res) => {
 
 exports.modifyPost = async (req, res) => {
   console.log(req.body);
-  return res.status(200).json({message: "testting",  body: req.body})
-  // console.log(req.body);
-  // const authUserId = req.auth.userId;
-  // const _id = req.params.id;
-  // const { post } = await Post.findOne({ _id });
+  const authUserId = req.auth.userId;
+  const _id = req.params.id;
+  const { post } = await Post.findOne({ _id });
 
-  // if (!post) 
-  // {
-  //   console.log("RES 1");
-  //   return res.status(404).json({ message: "post not found !" });
-  // }
-  // if (authUserId !== post.userId && authUserId !== "6319fc45f375ce7c71b7b6b8")
-  // {
-  //   console.log("RES 2");
-  //   return res.status(403).json({ message: "user not granted !" });
-  // }
+  if (!post) 
+  {
+    console.log("RES 1");
+    return res.status(404).json({ message: "post not found !" });
+  }
+  if (authUserId !== post.userId && authUserId !== "6319fc45f375ce7c71b7b6b8")
+  {
+    console.log("RES 2");
+    return res.status(403).json({ message: "user not granted !" });
+  }
+  try {
+    const updated = await Post.findByIdAndUpdate(_id, {post: req.body})
+    return res.status(200).json({message: "updated !", updated})
+  } catch (error) {
+    console.log(error);
+  }
     
 
   // const filename = post.imageUrl?.split("/images/")[1];
