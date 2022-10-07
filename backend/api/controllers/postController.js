@@ -15,7 +15,7 @@ exports.createPost = (req, res) => {
   const filename = req.file?.filename;
 
   // if(req.auth.userId === "6319fc45f375ce7c71b7b6b8")
-  //   return res.status(403).json({message: "user admin cannot post"}) 
+  //   return res.status(403).json({message: "user admin cannot post"})
   // else
   // {
     const post = new Post({
@@ -68,86 +68,160 @@ exports.deletePost = async (req, res) => {
 
 exports.modifyPost = async (req, res) => {
   console.log(req.body);
-  const authUserId = req.auth.userId;
-  const _id = req.params.id;
-  const { post } = await Post.findOne({ _id });
+  return res.status(200).json({message: "testting",  body: req.body})
+  // console.log(req.body);
+  // const authUserId = req.auth.userId;
+  // const _id = req.params.id;
+  // const { post } = await Post.findOne({ _id });
 
-  if (!post) return res.status(404).json({ message: "post not found !" });
-  if (authUserId !== post.userId && authUserId !== "6319fc45f375ce7c71b7b6b8")
-    return res.status(403).json({ message: "user not granted !" });
+  // if (!post) 
+  // {
+  //   console.log("RES 1");
+  //   return res.status(404).json({ message: "post not found !" });
+  // }
+  // if (authUserId !== post.userId && authUserId !== "6319fc45f375ce7c71b7b6b8")
+  // {
+  //   console.log("RES 2");
+  //   return res.status(403).json({ message: "user not granted !" });
+  // }
+    
 
-  const filename = post.imageUrl?.split("/images/")[1];
-  var hasNewImage;
-  console.log("HEHEHEEH", req);
-  if(req.body.imageUrl) hasNewImage = req.body.imageUrl;
-  else hasNewImage = post.imageUrl;
+  // const filename = post.imageUrl?.split("/images/")[1];
+  // var hasNewImage;
+  // if(req.body.imageUrl) hasNewImage = req.body.imageUrl;
+  // else hasNewImage = post.imageUrl;
+  // console.log("IMAGE URL", req.body);
 
+  // await Post.updateOne(
+  //   { _id },
+  //   {
+  //     post: {
+  //       ...post,
+  //       ...req.body,
+  //       imageUrl: req.body.imageUrl ? req.body.imageUrl : post.imageUrl
+  //     },
+  //     _id,
+  //   }
+  // );
 
-  await Post.updateOne(
-    { _id },
-    {
-      post: {
-        ...post,
-        ...req.body,
-        imageUrl: req.body.imageUrl ? req.body.imageUrl : post.imageUrl
-      },
-      _id,
-    }
-  );
+  // try 
+  // {
+  //   if (hasNewImage) {
+  //     fs.unlink(`images/${filename}`, () =>
+  //     {
+  //       console.log("RES 3");
+  //       res.status(200).json({ message: "image deleted", hasNewImage })
+  //       return;
+  //     }
+        
+  //     )
+  //   }
+  //   else {
+  //     console.log("RES 4");
+  //     return res.status(200).json({ message: "post modifié !" });
+  //   }
+  //   return;
+  // } catch (error)
+  // {
+  //   console.log(error);
+  // }
 
-  if (hasNewImage) {
-    fs.unlink(`images/${filename}`, () =>
-      res.status(200).json({ message: "post modifié !" })
-    );
-  } else res.status(200).json({ message: "post modifié !" });
+  // Post.findOne({ _id: req.params.id })
+  //   .then((post) => {
+  //     console.log("POST USERID", post.post.userId);
+  //     console.log("USER ID:", req.auth.userId);
+  //     if (
+  //       req.auth.userId === post.post.userId ||
+  //       req.auth.userId === "6319fc45f375ce7c71b7b6b8"
+  //     ) {
+  //       const filename = post.post.imageUrl.split("/images/")[1];
+  //       console.log(post);
+  //       if (req.file) {
+  //         fs.unlink(`images/${filename}`, () => {
+  //           const postObject = req.file
+  //             ? {
+  //                 post: {
+  //                   ...JSON.parse(req.body.post),
+  //                   imageUrl: `${req.protocol}://${req.get("host")}/images/${
+  //                     req.file.filename
+  //                   }`,
+  //                 },
+  //               }
+  //             : { post: { ...req.body } };
 
-  
-  console.log(req.auth);
-  console.log(req.file);
+  //           Post.updateOne(
+  //             { _id: req.params.id },
+  //             { post: { ...postObject }, _id: req.params.id }
+  //           )
+  //             .then(() => 
+  //             {
+  //               console.log("RES 5");
+  //               return res.status(200).json({ message: "post modifiée." })
+  //             })
+  //             .catch((error) => 
+  //             {
+  //               console.log("RES 6");
+  //               return res.status(400).json({ error })
+  //             });
+  //         });
+  //       }
+  //     } else {
+  //       console.log("RES 7");
+  //       return res.status(403).json({ message: "user not granted !" });
+  //     }
+  //     console.log("req.body");
+  //     console.log(req.body);
 
-  Post.findOne({ _id: req.params.id })
-    .then((post) => {
-      console.log("POST USERID", post.post.userId);
-      console.log("USER ID:", req.auth.userId);
-      if (
-        req.auth.userId === post.post.userId ||
-        req.auth.userId === "6319fc45f375ce7c71b7b6b8"
-      ) {
-        const filename = post.post.imageUrl.split("/images/")[1];
-        console.log(post);
-        if (req.file) {
-          fs.unlink(`images/${filename}`, () => {
-            const postObject = req.file
-              ? {
-                  post: {
-                    ...JSON.parse(req.body.post),
-                    imageUrl: `${req.protocol}://${req.get("host")}/images/${
-                      req.file.filename
-                    }`,
-                  },
-                }
-              : { post: { ...req.body } };
-
-            Post.updateOne(
-              { _id: req.params.id },
-              { post: { ...postObject }, _id: req.params.id }
-            )
-              .then(() => res.status(200).json({ message: "post modifiée." }))
-              .catch((error) => res.status(400).json({ error }));
-          });
-        }
-      } else {
-        return res.status(403).json({ message: "user not granted !" });
-      }
-      console.log("req.body");
-      console.log(req.body);
-
-      Post.updateOne({ _id: req.params.id }, { post: { ...req.body } })
-        .then(() => res.status(200).json({ message: "post modifiée." }))
-        .catch((error) => res.status(400).json({ error }));
-    })
-    .catch((error) => res.status(400).json({ error }));
+  //     Post.updateOne({ _id: req.params.id }, { post: { ...req.body } })
+  //       .then(() => 
+  //       {
+  //         console.log("RES 8");
+  //         return res.status(200).json({ message: "post modifiée." })
+  //       })
+  //       .catch((error) => 
+  //       {
+  //         console.log("RES 9");
+  //         return res.status(400).json({ error })
+  //       });
+  //   })
+  //   .catch((error) => 
+  //   {
+  //     console.log("RES 10");
+  //     return res.status(400).json({ error })
+  //   });
 };
+
+// exports.testCode = async (req, res) => 
+// {
+//   const _id = req.params.id;
+//   const { post } = await Post.findOne({ _id });
+//   const authUserId = req.auth.userId;
+  
+//   if (!post) return res.status(404).json({ message: "post not found !" });
+//   if (authUserId !== post.userId && authUserId !== "6319fc45f375ce7c71b7b6b8")
+//     return res.status(403).json({ message: "user not granted !" });
+//   const filename = post.imageUrl?.split("/images/")[1];
+//   var hasNewImage;
+//   console.log("HEHEHEEH", req);
+//   if(req.body.imageUrl) hasNewImage = req.body.imageUrl;
+//   else hasNewImage = post.imageUrl;
+
+//   await Post.updateOne(
+//     { _id },
+//     {
+//       post: {
+//         ...post,
+//         ...req.body,
+//         imageUrl: req.body.imageUrl ? req.body.imageUrl : post.imageUrl
+//       },
+//       _id,
+//     }
+//   );
+//   console.log(post);
+//   console.log("testCode");
+//   return res.status(200).json({message: "voici un test"})
+
+// }
 
 /*
   Like a post
@@ -174,9 +248,3 @@ exports.likePost = async (req, res) => {
   }
 };
 
-// exports.media = (req, res) =>
-// {
-//   console.log(req.file);
-//   console.log("this is media");
-//   return res.status(201).json(res);
-// }
