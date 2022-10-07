@@ -21,7 +21,8 @@ const Post = ({
 const [imageUrl, setImageUrl] = useState("");
   async function handleUpdate() 
   {
-    const res = await httpRequest({path: `/post/${window.location.href.split("/")[4]}`, method: "PUT", body: {imageUrl}})
+    const res = await httpRequest({path: `/post/${window.location.href.split("/")[4]}`, method: "PUT", body: {imageUrl, post_text: text}})
+    
   }
 
   return (

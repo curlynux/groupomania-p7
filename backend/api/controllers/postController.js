@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const Post = require("../models/postModel");
+const User = require("../models/userModel")
 const fs = require("fs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -77,17 +78,30 @@ exports.modifyPost = async (req, res) => {
     console.log("RES 1");
     return res.status(404).json({ message: "post not found !" });
   }
-  if (authUserId !== post.userId && authUserId !== "6319fc45f375ce7c71b7b6b8")
+  console.log(req.auth.userId);
+  const user = await User.findById(req.auth.userId)
+  
+  if(req.auth.userId === post.userId || user.role === "admin")
   {
-    console.log("RES 2");
-    return res.status(403).json({ message: "user not granted !" });
+    try {
+      const updated = await Post.findByIdAndUpdate(_id, 
+        {
+          $set: {
+            "post.post_text": req.body.post_text, 
+            "post.imageUrl": req.body.imageUrl ? req.body.imageUrl : post.imageUrl},
+          
+           
+        }, {new: true})
+      return res.status(200).json({message: "updated !", updated})
+    } catch (error) {
+      console.log(error);
+    }
+  } else 
+  {
+    return res.status(403).json({message: "user not granted"})
   }
-  try {
-    const updated = await Post.findByIdAndUpdate(_id, {post: req.body})
-    return res.status(200).json({message: "updated !", updated})
-  } catch (error) {
-    console.log(error);
-  }
+  console.log("USERID", post.userId);
+  
     
 
   // const filename = post.imageUrl?.split("/images/")[1];
