@@ -47,7 +47,7 @@ const [user, setUser] = useState({})
     </div>
     <p>{post.post_text}</p>
     {
-      user?.role === "admin" || user._id === post.userId && (
+      // user?.role === "admin" || user._id === post.userId && (
         <div className="divButton">
         <button
           onClick={handleRemove}
@@ -62,7 +62,7 @@ const [user, setUser] = useState({})
           modify
         </button>
       </div>
-      )
+      // )
     }
     {showModify && (
       <>
